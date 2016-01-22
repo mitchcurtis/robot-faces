@@ -2,107 +2,112 @@ import QtQuick 2.5
 import QtQuick.Window 2.2
 import Qt.labs.controls 1.0
 
-Window {
+ApplicationWindow {
     width: 640
     height: 480
     visible: true
     color: "#222"
 
-    readonly property int cellsWide: 8
-    readonly property int cellsHigh: 8
-    readonly property int cellSize: container.width / cellsWide
-
     Item {
-        id: container
+        id: grid
         width: parent.height
         height: width
         anchors.centerIn: parent
 
-        Repeater {
-            model: cellsWide * cellsHigh
-            delegate: Rectangle {
-                color: "transparent"
-                border.color: "#444"
-                x: (index % cellsWide) * cellSize
-                y: Math.floor(index / cellsWide) * cellSize
-                width: cellSize
-                height: cellSize
-            }
-        }
+        readonly property int cellsWide: 8
+        readonly property int cellsHigh: 8
+        readonly property int cellSize: grid.width / cellsWide
 
-        Rectangle {
-            id: leftEye
-            x: cellSize * 2
-            y: cellSize * 3
-            width: cellSize
-            height: cellSize
-            color: "#eee"
-        }
+//        Repeater {
+//            model: cellsWide * cellsHigh
+//            delegate: Rectangle {
+//                color: "transparent"
+//                border.color: "#444"
+//                x: (index % cellsWide) * cellSize
+//                y: Math.floor(index / cellsWide) * cellSize
+//                width: cellSize
+//                height: cellSize
+//            }
+//        }
 
-        Rectangle {
-            id: rightEye
-            x: cellSize * 6 - width
-            y: cellSize * 3
-            width: cellSize
-            height: cellSize
-            color: "#eee"
-        }
+        Item {
+            id: face
+            width: parent.width
+            height: parent.height
 
-        SequentialAnimation {
-            id: blinkAnimation
+//            Rectangle {
+//                anchors.fill: parent
+//                color: "transparent"
+//                border.color: "darkorange"
+//            }
 
-            ParallelAnimation {
-                NumberAnimation {
-                    targets: [leftEye, rightEye]
-                    property: "y"
-                    from: cellSize * 3
-                    to: cellSize * 3.5
-                    duration: 100
-                }
-                NumberAnimation {
-                    targets: [leftEye, rightEye]
-                    property: "height"
-                    from: cellSize
-                    to: 0
-                    duration: 100
-                }
-            }
+            readonly property int irisSize: grid.cellSize / 2
+            property int restingEyeSize: grid.cellSize * 0.8
 
-            PauseAnimation {
-                duration: 50
-            }
+            property alias leftEye: leftEye
+            property alias rightEye: rightEye
+            property alias mouth: mouth
 
-            ParallelAnimation {
-                NumberAnimation {
-                    targets: [leftEye, rightEye]
-                    property: "y"
-                    from: cellSize * 3.5
-                    to: cellSize * 3
-                    duration: 100
-                }
-                NumberAnimation {
-                    targets: [leftEye, rightEye]
-                    property: "height"
-                    from: 0
-                    to: cellSize
-                    duration: 100
+            Rectangle {
+                id: leftEye
+                x: grid.cellSize * 2
+                y: grid.cellSize * 3
+                width: face.restingEyeSize
+                height: face.restingEyeSize
+                color: "#eee"
+                clip: true
+
+                Rectangle {
+                    width: face.irisSize
+                    height: face.irisSize
+                    anchors.centerIn: parent
+                    color: "steelblue"
                 }
             }
-        }
 
-        Rectangle {
-            id: mouth
-            x: cellSize * 2
-            y: cellSize * 5
-            width: cellSize * 4
-            height: cellSize
-            color: "#eee"
-        }
+            Rectangle {
+                id: rightEye
+                x: grid.cellSize * 6 - width
+                y: grid.cellSize * 3
+                width: face.restingEyeSize
+                height: face.restingEyeSize
+                color: "#eee"
+                clip: true
 
-        Rectangle {
-            anchors.fill: parent
-            color: "transparent"
-            border.color: "darkorange"
+                Rectangle {
+                    width: face.irisSize
+                    height: face.irisSize
+                    anchors.centerIn: parent
+                    color: "steelblue"
+                }
+            }
+
+            BlinkAnimation {
+                id: blinkAnimation
+                grid: grid
+                face: face
+            }
+
+            ShockedAnimation {
+                id: shockedAnimation
+                grid: grid
+                face: face
+            }
+
+            LaughAnimation {
+                id: laughAnimation
+                grid: grid
+                face: face
+            }
+
+            Rectangle {
+                id: mouth
+                x: grid.cellSize * 2
+                y: grid.cellSize * 5
+                width: grid.cellSize * 4
+                height: grid.cellSize
+                color: "#eee"
+            }
         }
     }
 
@@ -111,9 +116,21 @@ Window {
         anchors.verticalCenter: parent.verticalCenter
 
         Button {
-            text: "Blink"
-            width: cellSize
+            text: "BL"
+            width: grid.cellSize
             onClicked: blinkAnimation.start()
+        }
+
+        Button {
+            text: "LA"
+            width: grid.cellSize
+            onClicked: laughAnimation.start()
+        }
+
+        Button {
+            text: "SH"
+            width: grid.cellSize
+            onClicked: shockedAnimation.start()
         }
     }
 }
