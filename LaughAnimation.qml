@@ -6,6 +6,8 @@ ParallelAnimation {
     property Item grid
     property Item face
 
+    readonly property real eyeYDest: grid.cellSize * 3 + face.restingEyeHeight * 0.4
+
     // Move the whole face down.
     NumberAnimation {
         target: face
@@ -21,15 +23,15 @@ ParallelAnimation {
             NumberAnimation {
                 targets: [face.leftEye, face.rightEye]
                 property: "y"
-                from: grid.cellSize * 3
-                to: grid.cellSize * 3.4
+                from: face.restingEyeY
+                to: eyeYDest
                 duration: 100
             }
             NumberAnimation {
                 targets: [face.leftEye, face.rightEye]
                 property: "height"
-                from: grid.cellSize
-                to: grid.cellSize * 0.2
+                from: face.restingEyeHeight
+                to: face.restingEyeHeight * 0.2
                 duration: 100
             }
             // Open and close the mouth several times.
@@ -67,15 +69,15 @@ ParallelAnimation {
             NumberAnimation {
                 targets: [face.leftEye, face.rightEye]
                 property: "y"
-                from: grid.cellSize * 3.4
-                to: grid.cellSize * 3
+                from: eyeYDest
+                to: face.restingEyeY
                 duration: 100
             }
             NumberAnimation {
                 targets: [face.leftEye, face.rightEye]
                 property: "height"
                 from: grid.cellSize * 0.2
-                to: grid.cellSize
+                to: face.restingEyeHeight
                 duration: 100
             }
         }

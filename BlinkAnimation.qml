@@ -17,7 +17,7 @@ SequentialAnimation {
         NumberAnimation {
             targets: [face.leftEye, face.rightEye]
             property: "height"
-            from: face.restingEyeSize
+            from: face.restingEyeHeight
             to: 0
             duration: 100
         }
@@ -39,7 +39,7 @@ SequentialAnimation {
             targets: [face.leftEye, face.rightEye]
             property: "height"
             from: 0
-            to: face.restingEyeSize
+            to: face.restingEyeHeight
             duration: 100
         }
     }

@@ -41,8 +41,9 @@ ApplicationWindow {
 //                border.color: "darkorange"
 //            }
 
-            readonly property int irisSize: grid.cellSize / 2
-            property int restingEyeSize: grid.cellSize * 0.8
+            property int restingEyeY: grid.cellSize * 3
+            property int restingEyeWidth: grid.cellSize * 0.6
+            property int restingEyeHeight: grid.cellSize * 0.6
 
             property alias leftEye: leftEye
             property alias rightEye: rightEye
@@ -51,35 +52,21 @@ ApplicationWindow {
             Rectangle {
                 id: leftEye
                 x: grid.cellSize * 2
-                y: grid.cellSize * 3
-                width: face.restingEyeSize
-                height: face.restingEyeSize
+                y: face.restingEyeY
+                width: face.restingEyeWidth
+                height: face.restingEyeHeight
                 color: "#eee"
                 clip: true
-
-                Rectangle {
-                    width: face.irisSize
-                    height: face.irisSize
-                    anchors.centerIn: parent
-                    color: "steelblue"
-                }
             }
 
             Rectangle {
                 id: rightEye
                 x: grid.cellSize * 6 - width
-                y: grid.cellSize * 3
-                width: face.restingEyeSize
-                height: face.restingEyeSize
+                y: face.restingEyeY
+                width: face.restingEyeWidth
+                height: face.restingEyeHeight
                 color: "#eee"
                 clip: true
-
-                Rectangle {
-                    width: face.irisSize
-                    height: face.irisSize
-                    anchors.centerIn: parent
-                    color: "steelblue"
-                }
             }
 
             BlinkAnimation {

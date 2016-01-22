@@ -6,7 +6,7 @@ SequentialAnimation {
     property Item grid
     property Item face
 
-    readonly property int shockedEyeSize: face.restingEyeSize * 1.25
+    readonly property int shockedEyeSize: face.restingEyeWidth * 1.25
 
     ParallelAnimation {
 //        NumberAnimation {
@@ -19,7 +19,7 @@ SequentialAnimation {
         NumberAnimation {
             targets: [face.leftEye, face.rightEye]
             properties: "width, height"
-            from: face.restingEyeSize
+            from: face.restingEyeWidth
             to: shockedEyeSize
             duration: 100
         }
@@ -41,7 +41,7 @@ SequentialAnimation {
             targets: [face.leftEye, face.rightEye]
             properties: "width, height"
             from: shockedEyeSize
-            to: face.restingEyeSize
+            to: face.restingEyeWidth
             duration: 100
         }
     }
