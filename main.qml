@@ -35,19 +35,39 @@ ApplicationWindow {
             width: parent.width
             height: parent.height
 
-//            Rectangle {
-//                anchors.fill: parent
-//                color: "transparent"
-//                border.color: "darkorange"
-//            }
-
+            property int restingEyebrowY: grid.cellSize * 2
             property int restingEyeY: grid.cellSize * 3
             property int restingEyeWidth: grid.cellSize * 0.6
             property int restingEyeHeight: grid.cellSize * 0.6
+            property int restingMouthHeight: grid.cellSize / 2
 
+            property alias leftEyebrow: leftEyebrow
+            property alias rightEyebrow: rightEyebrow
             property alias leftEye: leftEye
             property alias rightEye: rightEye
             property alias mouth: mouth
+
+            Rectangle {
+                id: leftEyebrow
+                x: restingX
+                y: face.restingEyebrowY
+                width: face.restingEyeWidth * 2
+                height: face.restingEyeHeight / 2
+                color: "#eee"
+
+                property int restingX: grid.cellSize * 2
+            }
+
+            Rectangle {
+                id: rightEyebrow
+                x: restingX
+                y: face.restingEyebrowY
+                width: face.restingEyeWidth * 2
+                height: face.restingEyeHeight / 2
+                color: "#eee"
+
+                property int restingX: grid.cellSize * 6 - width
+            }
 
             Rectangle {
                 id: leftEye
@@ -56,7 +76,6 @@ ApplicationWindow {
                 width: face.restingEyeWidth
                 height: face.restingEyeHeight
                 color: "#eee"
-                clip: true
             }
 
             Rectangle {
@@ -66,7 +85,6 @@ ApplicationWindow {
                 width: face.restingEyeWidth
                 height: face.restingEyeHeight
                 color: "#eee"
-                clip: true
             }
 
             BlinkAnimation {
@@ -92,7 +110,7 @@ ApplicationWindow {
                 x: grid.cellSize * 2
                 y: grid.cellSize * 5
                 width: grid.cellSize * 4
-                height: grid.cellSize
+                height: face.restingMouthHeight
                 color: "#eee"
             }
         }

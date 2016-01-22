@@ -7,6 +7,8 @@ ParallelAnimation {
     property Item face
 
     readonly property real eyeYDest: grid.cellSize * 3 + face.restingEyeHeight * 0.4
+    readonly property real eyebrowMovement: face.leftEyebrow.width / 3
+    readonly property real faceMovement: face.height * 0.1
 
     // Move the whole face down.
     NumberAnimation {
@@ -14,7 +16,7 @@ ParallelAnimation {
         property: "y"
         duration: 200
         from: 0
-        to: face.height * 0.15
+        to: faceMovement
     }
 
     SequentialAnimation {
@@ -34,22 +36,39 @@ ParallelAnimation {
                 to: face.restingEyeHeight * 0.2
                 duration: 100
             }
+            // Also, move the eyebrows.
+            NumberAnimation {
+                target: face.leftEyebrow
+                property: "x"
+                from: face.leftEyebrow.restingX
+                to: face.leftEyebrow.restingX - eyebrowMovement
+                duration: 200
+                easing.type: Easing.InOutQuad
+            }
+            NumberAnimation {
+                target: face.rightEyebrow
+                property: "x"
+                from: face.rightEyebrow.restingX
+                to: face.rightEyebrow.restingX + eyebrowMovement
+                duration: 200
+                easing.type: Easing.InOutQuad
+            }
             // Open and close the mouth several times.
             SequentialAnimation {
-                loops: 2
+                loops: 3
                 
                 NumberAnimation {
                     targets: face.mouth
                     property: "height"
-                    from: grid.cellSize
-                    to: grid.cellSize * 1.5
+                    from: face.restingMouthHeight
+                    to: face.restingMouthHeight * 2.5
                     duration: 300
                 }
                 NumberAnimation {
                     targets: face.mouth
                     property: "height"
-                    from: grid.cellSize * 1.5
-                    to: grid.cellSize
+                    from: face.restingMouthHeight * 2.5
+                    to: face.restingMouthHeight
                     duration: 50
                 }
             }
@@ -63,7 +82,7 @@ ParallelAnimation {
                 target: face
                 property: "y"
                 duration: 200
-                from: face.height * 0.15
+                from: faceMovement
                 to: 0
             }
             NumberAnimation {
@@ -79,6 +98,22 @@ ParallelAnimation {
                 from: grid.cellSize * 0.2
                 to: face.restingEyeHeight
                 duration: 100
+            }
+            NumberAnimation {
+                target: face.leftEyebrow
+                property: "x"
+                from: face.leftEyebrow.restingX - eyebrowMovement
+                to: face.leftEyebrow.restingX
+                duration: 200
+                easing.type: Easing.InOutQuad
+            }
+            NumberAnimation {
+                target: face.rightEyebrow
+                property: "x"
+                from: face.rightEyebrow.restingX + eyebrowMovement
+                to: face.rightEyebrow.restingX
+                duration: 200
+                easing.type: Easing.InOutQuad
             }
         }
     }
