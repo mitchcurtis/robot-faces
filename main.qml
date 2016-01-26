@@ -19,14 +19,14 @@ ApplicationWindow {
         readonly property int cellSize: grid.width / cellsWide
 
 //        Repeater {
-//            model: cellsWide * cellsHigh
+//            model: grid.cellsWide * grid.cellsHigh
 //            delegate: Rectangle {
 //                color: "transparent"
 //                border.color: "#444"
-//                x: (index % cellsWide) * cellSize
-//                y: Math.floor(index / cellsWide) * cellSize
-//                width: cellSize
-//                height: cellSize
+//                x: (index % grid.cellsWide) * grid.cellSize
+//                y: Math.floor(index / grid.cellsWide) * grid.cellSize
+//                width: grid.cellSize
+//                height: grid.cellSize
 //            }
 //        }
 
@@ -55,7 +55,7 @@ ApplicationWindow {
                 height: face.restingEyeHeight / 2
                 color: "#eee"
 
-                property int restingX: grid.cellSize * 2
+                property int restingX: leftEye.restingX + face.restingEyeWidth / 2 - width / 2
             }
 
             Rectangle {
@@ -66,25 +66,29 @@ ApplicationWindow {
                 height: face.restingEyeHeight / 2
                 color: "#eee"
 
-                property int restingX: grid.cellSize * 6 - width
+                property int restingX: rightEye.restingX + face.restingEyeWidth / 2 - width / 2
             }
 
             Rectangle {
                 id: leftEye
-                x: grid.cellSize * 2
+                x: restingX
                 y: face.restingEyeY
                 width: face.restingEyeWidth
                 height: face.restingEyeHeight
                 color: "#eee"
+
+                property int restingX: grid.cellSize * 2
             }
 
             Rectangle {
                 id: rightEye
-                x: grid.cellSize * 6 - width
+                x: restingX
                 y: face.restingEyeY
                 width: face.restingEyeWidth
                 height: face.restingEyeHeight
                 color: "#eee"
+
+                property int restingX: grid.cellSize * 6 - face.restingEyeWidth
             }
 
             BlinkAnimation {
@@ -101,6 +105,12 @@ ApplicationWindow {
 
             LaughAnimation {
                 id: laughAnimation
+                grid: grid
+                face: face
+            }
+
+            SadAnimation {
+                id: sadAnimation
                 grid: grid
                 face: face
             }
@@ -136,6 +146,12 @@ ApplicationWindow {
             text: "SH"
             width: grid.cellSize
             onClicked: shockedAnimation.start()
+        }
+
+        Button {
+            text: "SA"
+            width: grid.cellSize
+            onClicked: sadAnimation.start()
         }
     }
 }

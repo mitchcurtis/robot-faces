@@ -8,6 +8,7 @@ ParallelAnimation {
 
     readonly property real eyeYDest: grid.cellSize * 3 + face.restingEyeHeight * 0.4
     readonly property real eyebrowMovement: face.leftEyebrow.width / 3
+    readonly property real eyebrowRotation: 20
     readonly property real faceMovement: face.height * 0.1
 
     // Move the whole face down.
@@ -46,10 +47,26 @@ ParallelAnimation {
                 easing.type: Easing.InOutQuad
             }
             NumberAnimation {
+                target: face.leftEyebrow
+                property: "rotation"
+                from: 0
+                to: -eyebrowRotation
+                duration: 200
+                easing.type: Easing.InOutQuad
+            }
+            NumberAnimation {
                 target: face.rightEyebrow
                 property: "x"
                 from: face.rightEyebrow.restingX
                 to: face.rightEyebrow.restingX + eyebrowMovement
+                duration: 200
+                easing.type: Easing.InOutQuad
+            }
+            NumberAnimation {
+                target: face.rightEyebrow
+                property: "rotation"
+                from: 0
+                to: eyebrowRotation
                 duration: 200
                 easing.type: Easing.InOutQuad
             }
@@ -108,10 +125,26 @@ ParallelAnimation {
                 easing.type: Easing.InOutQuad
             }
             NumberAnimation {
+                target: face.leftEyebrow
+                property: "rotation"
+                from: -eyebrowRotation
+                to: 0
+                duration: 200
+                easing.type: Easing.InOutQuad
+            }
+            NumberAnimation {
                 target: face.rightEyebrow
                 property: "x"
                 from: face.rightEyebrow.restingX + eyebrowMovement
                 to: face.rightEyebrow.restingX
+                duration: 200
+                easing.type: Easing.InOutQuad
+            }
+            NumberAnimation {
+                target: face.rightEyebrow
+                property: "rotation"
+                from: eyebrowRotation
+                to: 0
                 duration: 200
                 easing.type: Easing.InOutQuad
             }
