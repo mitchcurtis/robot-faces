@@ -123,7 +123,10 @@ ApplicationWindow {
                 height: face.restingMouthHeight
                 color: "#eee"
 
+                property alias smileRect: smileRect
+
                 Rectangle {
+                    id: smileRect
                     x: grid.cellSize / 2
                     y: parent.height
                     width: grid.cellSize * 3

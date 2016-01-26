@@ -42,6 +42,14 @@ SequentialAnimation {
             duration: 400
             easing.type: Easing.InOutQuad
         }
+        NumberAnimation {
+            target: face.mouth.smileRect
+            property: "y"
+            from: face.mouth.height
+            to: 0
+            duration: 400
+            easing.type: Easing.InOutQuad
+        }
     }
     PauseAnimation {
         duration: 1000
@@ -76,6 +84,14 @@ SequentialAnimation {
             property: "rotation"
             from: eyebrowRotation
             to: 0
+            duration: 400
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
+            target: face.mouth.smileRect
+            property: "y"
+            from: 0
+            to: face.mouth.height
             duration: 400
             easing.type: Easing.InOutQuad
         }
