@@ -122,6 +122,14 @@ ApplicationWindow {
                 width: grid.cellSize * 4
                 height: face.restingMouthHeight
                 color: "#eee"
+
+                Rectangle {
+                    x: grid.cellSize / 2
+                    y: parent.height
+                    width: grid.cellSize * 3
+                    height: face.restingMouthHeight
+                    color: "#eee"
+                }
             }
         }
     }
