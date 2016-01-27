@@ -127,11 +127,14 @@ ApplicationWindow {
 
                 Rectangle {
                     id: smileRect
-                    x: grid.cellSize / 2
+                    x: restingX
                     y: parent.height
-                    width: grid.cellSize * 3
+                    width: restingWidth
                     height: face.restingMouthHeight
                     color: "#eee"
+
+                    property int restingX: grid.cellSize / 2
+                    property int restingWidth: grid.cellSize * 3
                 }
             }
         }

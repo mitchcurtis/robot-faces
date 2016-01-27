@@ -9,40 +9,58 @@ SequentialAnimation {
     readonly property int shockedEyeSize: face.restingEyeWidth * 1.25
 
     ParallelAnimation {
-//        NumberAnimation {
-//            targets: [face.leftEye, face.rightEye]
-//            property: "y"
-//            from: grid.cellSize * 3
-//            to: grid.cellSize * 3 - shockedEyeSize / 2
-//            duration: 100
-//        }
         NumberAnimation {
             targets: [face.leftEye, face.rightEye]
-            properties: "width, height"
-            from: face.restingEyeWidth
-            to: shockedEyeSize
-            duration: 100
+            property: "scale"
+            from: 1
+            to: 1.5
+            duration: 200
+        }
+        NumberAnimation {
+            target: face.mouth.smileRect
+            property: "x"
+            from: face.mouth.smileRect.restingX
+            to: face.mouth.smileRect.restingX - grid.cellSize / 2
+            duration: 200
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
+            target: face.mouth.smileRect
+            property: "width"
+            from: face.mouth.smileRect.restingWidth
+            to: face.mouth.smileRect.restingWidth + grid.cellSize
+            duration: 200
+            easing.type: Easing.InOutQuad
         }
     }
 
     PauseAnimation {
-        duration: 500
+        duration: 1000
     }
 
     ParallelAnimation {
-//        NumberAnimation {
-//            targets: [face.leftEye, face.rightEye]
-//            property: "y"
-//            from: grid.cellSize * 3 - shockedEyeSize / 2
-//            to: grid.cellSize * 3
-//            duration: 100
-//        }
         NumberAnimation {
             targets: [face.leftEye, face.rightEye]
-            properties: "width, height"
-            from: shockedEyeSize
-            to: face.restingEyeWidth
-            duration: 100
+            property: "scale"
+            from: 1.5
+            to: 1
+            duration: 200
+        }
+        NumberAnimation {
+            target: face.mouth.smileRect
+            property: "x"
+            from: face.mouth.smileRect.restingX - grid.cellSize / 2
+            to: face.mouth.smileRect.restingX
+            duration: 200
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
+            target: face.mouth.smileRect
+            property: "width"
+            from: face.mouth.smileRect.restingWidth + grid.cellSize
+            to: face.mouth.smileRect.restingWidth
+            duration: 200
+            easing.type: Easing.InOutQuad
         }
     }
 }
