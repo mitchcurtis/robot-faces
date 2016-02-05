@@ -2,8 +2,10 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>ShockedAnimation.qml</file>
-        <file>BlinkAnimation.qml</file>
         <file>LaughAnimation.qml</file>
         <file>SadAnimation.qml</file>
+        <file>Eye.qml</file>
+        <file>Nose.qml</file>
+        <file>Mouth.qml</file>
     </qresource>
 </RCC>
