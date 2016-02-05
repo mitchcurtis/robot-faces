@@ -27,6 +27,9 @@ ApplicationWindow {
 
             restingX: 95
             restingY: 85
+
+            followX: followSwitch.checked ? mouseArea.mouseX : 0
+            followY: followSwitch.checked ? mouseArea.mouseY : 0
         }
 
         Eye {
@@ -34,6 +37,9 @@ ApplicationWindow {
 
             restingX: 380
             restingY: 85
+
+            followX: followSwitch.checked ? mouseArea.mouseX : 0
+            followY: followSwitch.checked ? mouseArea.mouseY : 0
         }
 
         Nose {
@@ -46,6 +52,29 @@ ApplicationWindow {
 
             x: 135
             y: 355
+        }
+    }
+
+
+    Column {
+        MouseArea {
+            id: mouseArea
+            width: 80
+            height: 80
+            hoverEnabled: true
+
+            Rectangle {
+                anchors.fill: parent
+                color: "transparent"
+                border.color: followSwitch.checked ? (mouseArea.containsMouse ? "darkorange" : "lightgrey") : "grey"
+            }
+        }
+
+        Switch {
+            id: followSwitch
+            text: "follow eyes"
+
+            Component.onCompleted: label.color = "white"
         }
     }
 }
