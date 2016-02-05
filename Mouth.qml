@@ -5,8 +5,8 @@ Item {
         model: 11
 
         Rectangle {
-            x: index * (width + 20)
-            width: 27
+            x: index * (width + 18)
+            width: 20
             height: width
             color: "white"
         }

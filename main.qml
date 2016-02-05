@@ -33,14 +33,19 @@ ApplicationWindow {
             id: rightEye
 
             restingX: 380
-            restingY: 95
+            restingY: 85
+        }
+
+        Nose {
+            x: 278
+            y: 200
         }
 
         Mouth {
             id: mouth
 
-            x: 100
-            y: 200
+            x: 135
+            y: 355
         }
     }
 }
