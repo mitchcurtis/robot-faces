@@ -7,9 +7,8 @@ SequentialAnimation {
 
     ScriptAction {
         script: {
-            face.mouth.yOffset = 50;
-            face.mouth.cornerYOffset = -60;
-            face.mouth.teethRotation = 40;
+            face.mouth.cornerYOffset = 60;
+            face.mouth.teethRotation = -40;
         }
     }
 
@@ -24,19 +23,10 @@ SequentialAnimation {
         }
 
         NumberAnimation {
-            targets: [face.leftEye.pupil, face.rightEye.pupil]
-            property: "scale"
-            from: 1
-            to: 2
-            duration: 500
-            easing.type: Easing.InOutQuad
-        }
-
-        NumberAnimation {
             targets: face.leftEye.pupil
             property: "x"
             from: face.leftEye.pupil.restingX
-            to: face.leftEye.pupil.restingX + face.leftEye.pupil.width / 2
+            to: face.leftEye.pupil.restingX + face.leftEye.pupil.width
             duration: 500
             easing.type: Easing.InOutQuad
         }
@@ -45,7 +35,7 @@ SequentialAnimation {
             targets: face.leftEye.pupil
             property: "y"
             from: face.leftEye.pupil.restingY
-            to: face.leftEye.pupil.restingY + face.leftEye.pupil.height / 2
+            to: face.leftEye.pupil.restingY - face.leftEye.pupil.height
             duration: 500
             easing.type: Easing.InOutQuad
         }
@@ -54,7 +44,7 @@ SequentialAnimation {
             targets: face.rightEye.pupil
             property: "x"
             from: face.leftEye.pupil.restingX
-            to: face.leftEye.pupil.restingX - face.rightEye.pupil.width / 2
+            to: face.leftEye.pupil.restingX - face.rightEye.pupil.width
             duration: 500
             easing.type: Easing.InOutQuad
         }
@@ -63,7 +53,7 @@ SequentialAnimation {
             targets: face.rightEye.pupil
             property: "y"
             from: face.rightEye.pupil.restingY
-            to: face.rightEye.pupil.restingY + face.rightEye.pupil.height / 2
+            to: face.rightEye.pupil.restingY - face.rightEye.pupil.height
             duration: 500
             easing.type: Easing.InOutQuad
         }
@@ -77,7 +67,7 @@ SequentialAnimation {
         NumberAnimation {
             targets: face.leftEye.pupil
             property: "x"
-            from: face.leftEye.pupil.restingX + face.leftEye.pupil.width / 2
+            from: face.leftEye.pupil.restingX + face.leftEye.pupil.width
             to: face.leftEye.pupil.restingX
             duration: 500
             easing.type: Easing.InOutQuad
@@ -86,7 +76,7 @@ SequentialAnimation {
         NumberAnimation {
             targets: face.leftEye.pupil
             property: "y"
-            from: face.leftEye.pupil.restingY + face.leftEye.pupil.height / 2
+            from: face.leftEye.pupil.restingY - face.leftEye.pupil.height
             to: face.leftEye.pupil.restingY
             duration: 500
             easing.type: Easing.InOutQuad
@@ -95,7 +85,7 @@ SequentialAnimation {
         NumberAnimation {
             targets: face.rightEye.pupil
             property: "x"
-            from: face.leftEye.pupil.restingX - face.rightEye.pupil.width / 2
+            from: face.leftEye.pupil.restingX - face.rightEye.pupil.width
             to: face.leftEye.pupil.restingX
             duration: 500
             easing.type: Easing.InOutQuad
@@ -104,21 +94,11 @@ SequentialAnimation {
         NumberAnimation {
             targets: face.rightEye.pupil
             property: "y"
-            from: face.rightEye.pupil.restingY + face.rightEye.pupil.height / 2
+            from: face.rightEye.pupil.restingY - face.rightEye.pupil.height
             to: face.rightEye.pupil.restingY
             duration: 500
             easing.type: Easing.InOutQuad
         }
-
-        NumberAnimation {
-            targets: [face.leftEye.pupil, face.rightEye.pupil]
-            property: "scale"
-            from: 2
-            to: 1
-            duration: 500
-            easing.type: Easing.InOutQuad
-        }
-
 
         NumberAnimation {
             target: face.mouth
@@ -132,7 +112,6 @@ SequentialAnimation {
 
     ScriptAction {
         script: {
-            face.mouth.yOffset = 0;
             face.mouth.cornerYOffset = 0;
             face.mouth.teethRotation = 0;
         }

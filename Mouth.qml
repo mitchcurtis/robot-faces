@@ -8,6 +8,8 @@ Item {
     property real yOffset: 0
     // Affects the y position of the corners of the mouth
     property real cornerYOffset: 0
+    // The amount to rotate the teeth by
+    property real teethRotation: 0
 
     Repeater {
         id: repeater
@@ -28,7 +30,7 @@ Item {
             readonly property real normXPos: index / (repeater.count - 1)
             // The "normalised" (0.0 - 1.0) position of this rect along the vertical axis of the mouth.
             readonly property real normYPos: (normXPos < 0.5 ? 0.5 - normXPos : normXPos - 0.5) * 2
-            readonly property real rotationDirection: normXPos < 0.5 ? 40 : -40
+            readonly property real rotationDirection: normXPos < 0.5 ? teethRotation : -teethRotation
 
             // Defines the shape of the mouth.
             EasingCurve {

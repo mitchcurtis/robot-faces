@@ -63,6 +63,11 @@ ApplicationWindow {
         face: face
     }
 
+    SadAnimation {
+        id: sadAnimation
+        face: face
+    }
+
     Column {
         MouseArea {
             id: mouseArea
@@ -89,6 +94,13 @@ ApplicationWindow {
             width: 50
             focus: true
             onClicked: happyAnimation.start()
+        }
+
+        Button {
+            text: "SA"
+            width: 50
+            focus: true
+            onClicked: sadAnimation.start()
         }
     }
 }
