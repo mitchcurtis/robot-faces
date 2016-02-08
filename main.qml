@@ -20,7 +20,8 @@ ApplicationWindow {
 
         property alias leftEye: leftEye
         property alias rightEye: rightEye
-//        property alias mouth: mouth
+        property alias mouth: mouth
+        property alias nose: nose
 
         Eye {
             id: leftEye
@@ -43,6 +44,8 @@ ApplicationWindow {
         }
 
         Nose {
+            id: nose
+
             x: 278
             y: 200
         }
@@ -50,11 +53,15 @@ ApplicationWindow {
         Mouth {
             id: mouth
 
-            x: 135
+            x: 120
             y: 355
         }
     }
 
+    HappyAnimation {
+        id: happyAnimation
+        face: face
+    }
 
     Column {
         MouseArea {
@@ -75,6 +82,13 @@ ApplicationWindow {
             text: "follow eyes"
 
             Component.onCompleted: label.color = "white"
+        }
+
+        Button {
+            text: "HA"
+            width: 50
+            focus: true
+            onClicked: happyAnimation.start()
         }
     }
 }

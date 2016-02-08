@@ -10,6 +10,7 @@ Rectangle {
     border.width: 12
     border.color: "#80c342"
 
+    property alias pupil: pupil
     property int restingX
     property int restingY
     property int restingWidth: 165
@@ -25,12 +26,16 @@ Rectangle {
         anchors.centerIn: parent
 
         Rectangle {
-            x: followX != 0 ? followX : parent.width / 2 - width / 2
-            y: followY != 0 ? followY : parent.height / 2 - height / 2
+            id: pupil
+            x: followX != 0 ? followX : restingX
+            y: followY != 0 ? followY : restingY
             width: 27
             height: width
             radius: width / 2
             color: "black"
+
+            readonly property int restingX: parent.width / 2 - width / 2
+            readonly property int restingY: parent.height / 2 - height / 2
         }
     }
 }

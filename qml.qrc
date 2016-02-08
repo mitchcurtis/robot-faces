@@ -4,5 +4,6 @@
         <file>Eye.qml</file>
         <file>Nose.qml</file>
         <file>Mouth.qml</file>
+        <file>HappyAnimation.qml</file>
     </qresource>
 </RCC>
