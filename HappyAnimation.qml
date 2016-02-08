@@ -5,11 +5,12 @@ import App 1.0
 SequentialAnimation {
     property var face
 
-//    ScriptAction {
-//        script: {
-//            face.mouth.expressionType = MouthEasingCurve.Happy;
-//        }
-//    }
+    ScriptAction {
+        script: {
+            face.mouth.yOffset = 50;
+            face.mouth.cornerYOffset = -60;
+        }
+    }
 
     ParallelAnimation {
         NumberAnimation {

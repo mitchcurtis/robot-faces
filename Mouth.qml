@@ -4,7 +4,10 @@ import App 1.0
 
 Item {
     property real progress: 0
-    property int expressionType
+    // Affects the y position of the whole mouth
+    property real yOffset: 0
+    // Affects the y position of the corners of the mouth
+    property real cornerYOffset: 0
 
     Repeater {
         id: repeater
@@ -13,7 +16,7 @@ Item {
         Rectangle {
             id: tooth
             x: index * (width + 18)
-            y: progress * (mouthCurve.value * -60) + progress * 50
+            y: progress * (mouthCurve.value * cornerYOffset) + progress * yOffset
             rotation: progress * normYPos * rotationDirection
             width: 20
             // Make the teeth a bit taller.
