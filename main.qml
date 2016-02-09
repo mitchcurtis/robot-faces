@@ -31,6 +31,8 @@ ApplicationWindow {
             face.mouth.teethRotation = 0;
             face.mouth.teethSpacing = face.mouth.restingTeethSpacing;
             face.mouth.toothHeight = face.mouth.restingToothHeight;
+            face.mouth.visibleRangeMin = 0;
+            face.mouth.visibleRangeMax = face.mouth.teethCount;
         }
 
         Rectangle {
@@ -87,7 +89,6 @@ ApplicationWindow {
         Mouth {
             id: mouth
 
-//            x: parent.width / 2 - width / 2
             x: 120
             y: 355
         }

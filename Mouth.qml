@@ -15,6 +15,10 @@ Item {
     readonly property int restingToothHeight: toothWidth
     property real toothHeight: restingToothHeight
 
+    property int visibleRangeMin: 0
+    property int visibleRangeMax: teethCount
+    readonly property alias teethCount: repeater.count
+
     readonly property int toothWidth: 20
     readonly property int restingTeethSpacing: toothWidth + 18
 
@@ -32,6 +36,7 @@ Item {
             height: toothHeight + progress * 10
             color: "white"
             antialiasing: true
+            visible: index >= visibleRangeMin && index <= visibleRangeMax
 
             // The "normalised" (0.0 - 1.0) position of this rect along the horizontal axis of the mouth.
             readonly property real normXPos: index / (repeater.count - 1)

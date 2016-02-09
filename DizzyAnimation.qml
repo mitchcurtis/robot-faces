@@ -5,7 +5,8 @@ SequentialAnimation {
 
     ScriptAction {
         script: {
-//            face.mouth.yOffset = 50;
+            face.mouth.visibleRangeMin = 5;
+            face.mouth.visibleRangeMax = 5;
         }
     }
 
@@ -27,15 +28,6 @@ SequentialAnimation {
             from: face.rightEyeBag.restingY
             to: face.rightEyeBag.restingY + 30
             duration: 500
-            easing.type: Easing.InOutQuad
-        }
-
-        NumberAnimation {
-            target: face.mouth
-            property: "teethSpacing"
-            from: face.mouth.restingTeethSpacing
-            to: 0
-            duration: 100
             easing.type: Easing.InOutQuad
         }
 
@@ -139,6 +131,18 @@ SequentialAnimation {
                     to: face.rightEyeBag.restingY
                     duration: 500
                     easing.type: Easing.InOutQuad
+                }
+
+                SequentialAnimation {
+                    PauseAnimation {
+                        duration: 200
+                    }
+                    ScriptAction {
+                        script: {
+                            face.mouth.visibleRangeMin = 0;
+                            face.mouth.visibleRangeMax = face.mouth.teethCount;
+                        }
+                    }
                 }
             }
         }
