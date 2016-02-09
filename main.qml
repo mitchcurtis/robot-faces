@@ -119,6 +119,11 @@ ApplicationWindow {
         face: face
     }
 
+    AngryAnimation {
+        id: angryAnimation
+        face: face
+    }
+
     Column {
         MouseArea {
             id: mouseArea
@@ -168,6 +173,12 @@ ApplicationWindow {
             text: "SH"
             width: 50
             onClicked: shyAnimation.start()
+        }
+
+        Button {
+            text: "AN"
+            width: 50
+            onClicked: angryAnimation.start()
         }
     }
 }
