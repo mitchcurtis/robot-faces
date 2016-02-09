@@ -30,6 +30,7 @@ ApplicationWindow {
             face.mouth.cornerYOffset = 0;
             face.mouth.teethRotation = 0;
             face.mouth.teethSpacing = face.mouth.restingTeethSpacing;
+            face.mouth.toothHeight = face.mouth.restingToothHeight;
         }
 
         Rectangle {
@@ -107,6 +108,11 @@ ApplicationWindow {
         face: face
     }
 
+    CryingAnimation {
+        id: cryingAnimation
+        face: face
+    }
+
     Column {
         MouseArea {
             id: mouseArea
@@ -131,22 +137,25 @@ ApplicationWindow {
         Button {
             text: "HA"
             width: 50
-            focus: true
             onClicked: happyAnimation.start()
         }
 
         Button {
             text: "SA"
             width: 50
-            focus: true
             onClicked: sadAnimation.start()
         }
 
         Button {
             text: "DI"
             width: 50
-            focus: true
             onClicked: dizzyAnimation.start()
+        }
+
+        Button {
+            text: "CR"
+            width: 50
+            onClicked: cryingAnimation.start()
         }
     }
 }

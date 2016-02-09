@@ -12,6 +12,8 @@ Item {
     property real teethRotation: 0
     // The distance from the x pos of one tooth to the x of another
     property real teethSpacing: restingTeethSpacing
+    readonly property int restingToothHeight: toothWidth
+    property real toothHeight: restingToothHeight
 
     readonly property int toothWidth: 20
     readonly property int restingTeethSpacing: toothWidth + 18
@@ -27,7 +29,7 @@ Item {
             rotation: progress * normYPos * rotationDirection
             width: toothWidth
             // Make the teeth a bit taller.
-            height: width + progress * 10
+            height: toothHeight + progress * 10
             color: "white"
             antialiasing: true
 

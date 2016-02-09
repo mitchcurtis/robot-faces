@@ -7,5 +7,6 @@
         <file>HappyAnimation.qml</file>
         <file>SadAnimation.qml</file>
         <file>DizzyAnimation.qml</file>
+        <file>CryingAnimation.qml</file>
     </qresource>
 </RCC>
