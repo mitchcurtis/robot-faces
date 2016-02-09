@@ -111,9 +111,6 @@ SequentialAnimation {
     }
 
     ScriptAction {
-        script: {
-            face.mouth.cornerYOffset = 0;
-            face.mouth.teethRotation = 0;
-        }
+        script: face.reset()
     }
 }

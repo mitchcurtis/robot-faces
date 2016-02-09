@@ -6,5 +6,6 @@
         <file>Mouth.qml</file>
         <file>HappyAnimation.qml</file>
         <file>SadAnimation.qml</file>
+        <file>DizzyAnimation.qml</file>
     </qresource>
 </RCC>

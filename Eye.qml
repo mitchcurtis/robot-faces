@@ -5,7 +5,7 @@ Rectangle {
     y: restingY
     width: restingWidth
     height: restingHeight
-    color: "transparent"
+    color: "black"
     radius: width / 2
     border.width: 12
     border.color: "#80c342"

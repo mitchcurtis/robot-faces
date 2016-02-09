@@ -18,10 +18,42 @@ ApplicationWindow {
         width: parent.width
         height: parent.height
 
+        property alias leftEyeBag: leftEyeBag
+        property alias rightEyeBag: rightEyeBag
         property alias leftEye: leftEye
         property alias rightEye: rightEye
         property alias mouth: mouth
         property alias nose: nose
+
+        function reset() {
+            face.mouth.yOffset = 0;
+            face.mouth.cornerYOffset = 0;
+            face.mouth.teethRotation = 0;
+        }
+
+        Rectangle {
+            id: leftEyeBag
+            x: leftEye.x + leftEye.width / 2 - width / 2
+            y: restingY
+            width: leftEye.restingWidth - 10
+            height: width
+            color: "black"
+            radius: width / 2
+
+            readonly property real restingY: leftEye.y + leftEye.height / 2 - height / 2
+        }
+
+        Rectangle {
+            id: rightEyeBag
+            x: rightEye.x + rightEye.width / 2 - width / 2
+            y: restingY
+            width: rightEye.restingWidth - 10
+            height: width
+            color: "black"
+            radius: width / 2
+
+            readonly property real restingY: rightEye.y + rightEye.height / 2 - height / 2
+        }
 
         Eye {
             id: leftEye
@@ -68,6 +100,11 @@ ApplicationWindow {
         face: face
     }
 
+    DizzyAnimation {
+        id: dizzyAnimation
+        face: face
+    }
+
     Column {
         MouseArea {
             id: mouseArea
@@ -101,6 +138,13 @@ ApplicationWindow {
             width: 50
             focus: true
             onClicked: sadAnimation.start()
+        }
+
+        Button {
+            text: "DI"
+            width: 50
+            focus: true
+            onClicked: dizzyAnimation.start()
         }
     }
 }
