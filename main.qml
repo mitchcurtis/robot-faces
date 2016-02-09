@@ -114,6 +114,11 @@ ApplicationWindow {
         face: face
     }
 
+    ShyAnimation {
+        id: shyAnimation
+        face: face
+    }
+
     Column {
         MouseArea {
             id: mouseArea
@@ -157,6 +162,12 @@ ApplicationWindow {
             text: "CR"
             width: 50
             onClicked: cryingAnimation.start()
+        }
+
+        Button {
+            text: "SH"
+            width: 50
+            onClicked: shyAnimation.start()
         }
     }
 }
