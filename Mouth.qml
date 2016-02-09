@@ -10,6 +10,11 @@ Item {
     property real cornerYOffset: 0
     // The amount to rotate the teeth by
     property real teethRotation: 0
+    // The distance from the x pos of one tooth to the x of another
+    property real teethSpacing: restingTeethSpacing
+
+    readonly property int toothWidth: 20
+    readonly property int restingTeethSpacing: toothWidth + 18
 
     Repeater {
         id: repeater
@@ -17,10 +22,10 @@ Item {
 
         Rectangle {
             id: tooth
-            x: index * (width + 18)
+            x: index * teethSpacing
             y: progress * (mouthCurve.value * cornerYOffset) + progress * yOffset
             rotation: progress * normYPos * rotationDirection
-            width: 20
+            width: toothWidth
             // Make the teeth a bit taller.
             height: width + progress * 10
             color: "white"

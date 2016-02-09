@@ -32,6 +32,15 @@ SequentialAnimation {
             easing.type: Easing.InOutQuad
         }
 
+        NumberAnimation {
+            target: face.mouth
+            property: "teethSpacing"
+            from: face.mouth.restingTeethSpacing
+            to: 0
+            duration: 100
+            easing.type: Easing.InOutQuad
+        }
+
         SequentialAnimation {
             ParallelAnimation {
                 NumberAnimation {

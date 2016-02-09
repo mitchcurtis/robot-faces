@@ -24,18 +24,21 @@ Rectangle {
         height: width
         radius: width / 2
         anchors.centerIn: parent
+        antialiasing: true
 
         Rectangle {
             id: pupil
             x: followX != 0 ? followX : restingX
             y: followY != 0 ? followY : restingY
-            width: 27
+            width: restingWidth
             height: width
             radius: width / 2
             color: "black"
+            antialiasing: true
 
-            readonly property int restingX: parent.width / 2 - width / 2
-            readonly property int restingY: parent.height / 2 - height / 2
+            readonly property int restingX: parent.width / 2 - restingWidth / 2
+            readonly property int restingY: parent.height / 2 - restingWidth / 2
+            readonly property int restingWidth: 27
         }
     }
 }

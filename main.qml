@@ -29,6 +29,7 @@ ApplicationWindow {
             face.mouth.yOffset = 0;
             face.mouth.cornerYOffset = 0;
             face.mouth.teethRotation = 0;
+            face.mouth.teethSpacing = face.mouth.restingTeethSpacing;
         }
 
         Rectangle {
@@ -85,6 +86,7 @@ ApplicationWindow {
         Mouth {
             id: mouth
 
+//            x: parent.width / 2 - width / 2
             x: 120
             y: 355
         }
