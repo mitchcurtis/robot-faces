@@ -31,7 +31,6 @@ ApplicationWindow {
             face.mouth.yOffset = 0;
             face.mouth.cornerYOffset = 0;
             face.mouth.teethRotation = 0;
-            face.mouth.teethSpacing = face.mouth.restingTeethSpacing;
             face.mouth.toothHeight = face.mouth.restingToothHeight;
             face.mouth.visibleRangeMin = 0;
             face.mouth.visibleRangeMax = face.mouth.teethCount;

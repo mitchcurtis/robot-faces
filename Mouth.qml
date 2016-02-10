@@ -11,7 +11,7 @@ Item {
     // The amount to rotate the teeth by
     property real teethRotation: 0
     // The distance from the x pos of one tooth to the x of another
-    property real teethSpacing: restingTeethSpacing
+    readonly property real teethSpacing: toothWidth + 18
     readonly property int restingToothHeight: toothWidth
     property real toothHeight: restingToothHeight
 
@@ -20,9 +20,12 @@ Item {
     readonly property alias teethCount: repeater.count
 
     readonly property int toothWidth: 20
-    readonly property int restingTeethSpacing: toothWidth + 18
 
     property alias block: block
+
+    // Some manual adjustments that get very messy if calculated based on the index, etc.
+    readonly property var xAdjustments: [15, 5, 0, 0, 0, 0, 0, 0, 0, -5, -15]
+    readonly property var yAdjustments: [-15, -5, 0, -2, -5, -7, -5, -2, 0, -5, -15]
 
     Repeater {
         id: repeater
@@ -30,9 +33,10 @@ Item {
 
         Rectangle {
             id: tooth
-            x: index * teethSpacing
-            y: progress * (mouthCurve.value * cornerYOffset) + progress * yOffset
+            x: index * teethSpacing + xAdjustment
+            y: progress * (mouthCurve.value * cornerYOffset) + progress * yOffset + yAdjustment
             rotation: progress * normYPos * rotationDirection
+            scale: Math.min(0.5 + (1 - (progress * normYPos)), 1)
             width: toothWidth
             // Make the teeth a bit taller.
             height: toothHeight + progress * 10
@@ -45,6 +49,9 @@ Item {
             // The "normalised" (0.0 - 1.0) position of this rect along the vertical axis of the mouth.
             readonly property real normYPos: (normXPos < 0.5 ? 0.5 - normXPos : normXPos - 0.5) * 2
             readonly property real rotationDirection: normXPos < 0.5 ? teethRotation : -teethRotation
+            // Push the teeth at the edge of the mouth towards the center, as they're too spaced out by default.
+            readonly property real xAdjustment: progress * xAdjustments[index]
+            readonly property real yAdjustment: progress * (cornerYOffset > 0 ? yAdjustments[index] : Math.abs(yAdjustments[index]))
 
             // Defines the shape of the mouth.
             EasingCurve {
