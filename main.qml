@@ -35,6 +35,7 @@ ApplicationWindow {
             face.mouth.toothHeight = face.mouth.restingToothHeight;
             face.mouth.visibleRangeMin = 0;
             face.mouth.visibleRangeMax = face.mouth.teethCount;
+            face.mouth.block.visible = false;
         }
 
         Rectangle {
@@ -157,6 +158,11 @@ ApplicationWindow {
         face: face
     }
 
+    StartledAnimation {
+        id: startledAnimation
+        face: face
+    }
+
     Column {
         MouseArea {
             id: mouseArea
@@ -212,6 +218,12 @@ ApplicationWindow {
             text: "AN"
             width: 50
             onClicked: angryAnimation.start()
+        }
+
+        Button {
+            text: "ST"
+            width: 50
+            onClicked: startledAnimation.start()
         }
     }
 }

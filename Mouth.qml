@@ -22,6 +22,8 @@ Item {
     readonly property int toothWidth: 20
     readonly property int restingTeethSpacing: toothWidth + 18
 
+    property alias block: block
+
     Repeater {
         id: repeater
         model: 11
@@ -34,7 +36,7 @@ Item {
             width: toothWidth
             // Make the teeth a bit taller.
             height: toothHeight + progress * 10
-            color: "white"
+            color: "#929495"
             antialiasing: true
             visible: index >= visibleRangeMin && index <= visibleRangeMax
 
@@ -51,5 +53,14 @@ Item {
                 progress: tooth.normYPos
             }
         }
+    }
+
+    Rectangle {
+        id: block
+        x: 320 - parent.x - width / 2
+        width: 85
+        height: restingToothHeight
+        color: "#929495"
+        visible: false
     }
 }
