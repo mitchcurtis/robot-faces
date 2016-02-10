@@ -163,6 +163,11 @@ ApplicationWindow {
         face: face
     }
 
+    SuspiciousAnimation {
+        id: suspiciousAnimation
+        face: face
+    }
+
     Column {
         MouseArea {
             id: mouseArea
@@ -224,6 +229,12 @@ ApplicationWindow {
             text: "ST"
             width: 50
             onClicked: startledAnimation.start()
+        }
+
+        Button {
+            text: "SU"
+            width: 50
+            onClicked: suspiciousAnimation.start()
         }
     }
 }
