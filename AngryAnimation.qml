@@ -3,6 +3,8 @@ import QtQuick 2.0
 SequentialAnimation {
     property var face
 
+    readonly property int pupilWidthIncrease: face.leftEye.pupil.restingWidth
+
     ParallelAnimation {
         NumberAnimation {
             target: face.mouth
@@ -33,6 +35,22 @@ SequentialAnimation {
             from: 0
             // Because we flip the image, we don't use 45 here.
             to: -58
+            duration: 200
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
+            targets: [face.leftEye.pupil, face.rightEye.pupil]
+            property: "height"
+            from: face.leftEye.pupil.restingWidth
+            to: face.leftEye.pupil.restingWidth + pupilWidthIncrease
+            duration: 200
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
+            targets: [face.leftEye.pupil, face.rightEye.pupil]
+            property: "y"
+            from: face.leftEye.pupil.restingY
+            to: face.leftEye.pupil.restingY - pupilWidthIncrease / 2
             duration: 200
             easing.type: Easing.InOutQuad
         }
@@ -71,6 +89,22 @@ SequentialAnimation {
             property: "toothHeight"
             from: face.mouth.restingToothHeight * 2.5
             to: face.mouth.restingToothHeight
+            duration: 200
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
+            targets: [face.leftEye.pupil, face.rightEye.pupil]
+            property: "y"
+            from: face.leftEye.pupil.restingY - pupilWidthIncrease / 2
+            to: face.leftEye.pupil.restingY
+            duration: 200
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
+            targets: [face.leftEye.pupil, face.rightEye.pupil]
+            property: "height"
+            from: face.leftEye.pupil.restingWidth + pupilWidthIncrease
+            to: face.leftEye.pupil.restingWidth
             duration: 200
             easing.type: Easing.InOutQuad
         }

@@ -38,19 +38,28 @@ Rectangle {
 
         readonly property int restingHeight: 112
 
-        Rectangle {
+        Canvas {
             id: pupil
             x: followX != 0 ? followX : restingX
             y: followY != 0 ? followY : restingY
             width: restingWidth
             height: width
-            radius: width / 2
-            color: "black"
-            antialiasing: true
 
+            property color color: "black"
             readonly property int restingX: parent.width / 2 - restingWidth / 2
             readonly property int restingY: parent.height / 2 - restingWidth / 2
             readonly property int restingWidth: 27
+
+            onColorChanged: requestPaint()
+
+            onPaint: {
+                var ctx = getContext("2d");
+                ctx.reset();
+                ctx.beginPath();
+                ctx.ellipse(0, 0, width, height);
+                ctx.fillStyle = color;
+                ctx.fill();
+            }
         }
 
         Rectangle {
