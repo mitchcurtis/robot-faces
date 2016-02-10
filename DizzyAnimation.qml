@@ -7,6 +7,8 @@ SequentialAnimation {
         script: {
             face.mouth.visibleRangeMin = 5;
             face.mouth.visibleRangeMax = 5;
+            face.leftEyeBag.visible = true;
+            face.rightEyeBag.visible = true;
         }
     }
 

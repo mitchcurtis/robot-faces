@@ -6,8 +6,8 @@ Rectangle {
     width: restingWidth
     height: restingHeight
     color: "black"
-    radius: width / 2
-    border.width: 12
+    radius: restingRadius
+    border.width: restingBorderWidth
     border.color: restingBorderColor
 
     property alias pupil: pupil
@@ -18,21 +18,25 @@ Rectangle {
     property int restingY
     property int restingWidth: 165
     property int restingHeight: 165
+    readonly property int restingRadius: restingWidth / 2
     property int followX: 0
     property int followY: 0
 
     readonly property color restingBorderColor: "#80c342"
+    readonly property int restingBorderWidth: 12
 
     Rectangle {
         id: sclera
         color: "white"
-        width: 112
-        height: width
+        width: restingHeight
+        height: restingHeight
         radius: width / 2
         border.color: "white"
         border.width: 0
         antialiasing: true
         anchors.centerIn: parent
+
+        readonly property int restingHeight: 112
 
         Rectangle {
             id: pupil

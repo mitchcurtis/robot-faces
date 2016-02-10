@@ -36,6 +36,8 @@ ApplicationWindow {
             face.mouth.visibleRangeMin = 0;
             face.mouth.visibleRangeMax = face.mouth.teethCount;
             face.mouth.block.visible = false;
+            leftEyeBag.visible = false;
+            rightEyeBag.visible = false;
         }
 
         Rectangle {
@@ -46,6 +48,7 @@ ApplicationWindow {
             height: width
             color: "black"
             radius: width / 2
+            visible: false
 
             readonly property real restingY: leftEye.y + leftEye.height / 2 - height / 2
         }
@@ -58,6 +61,7 @@ ApplicationWindow {
             height: width
             color: "black"
             radius: width / 2
+            visible: false
 
             readonly property real restingY: rightEye.y + rightEye.height / 2 - height / 2
         }
