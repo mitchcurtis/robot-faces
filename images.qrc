@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>images/big-tear.png</file>
+        <file>images/eyebrow.png</file>
     </qresource>
 </RCC>

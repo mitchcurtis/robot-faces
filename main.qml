@@ -6,7 +6,7 @@ ApplicationWindow {
     width: 640
     height: 480
     visible: true
-    color: "#222"
+    color: "#3B3C3E"
 
     Shortcut {
         sequence: "Ctrl+Q"
@@ -22,6 +22,8 @@ ApplicationWindow {
         property alias rightEyeBag: rightEyeBag
         property alias leftEye: leftEye
         property alias rightEye: rightEye
+        property alias leftEyebrow: leftEyebrow
+        property alias rightEyebrow: rightEyebrow
         property alias mouth: mouth
         property alias nose: nose
 
@@ -77,6 +79,37 @@ ApplicationWindow {
 
             followX: followSwitch.checked ? mouseArea.mouseX : 0
             followY: followSwitch.checked ? mouseArea.mouseY : 0
+        }
+
+        Eyebrow {
+            id: leftEyebrow
+            x: leftEye.restingX + leftEye.restingWidth
+            y: nose.y - height
+            opacity: 1
+            transformOrigin: Item.BottomLeft
+        }
+
+        Eyebrow {
+            id: rightEyebrow
+            x: rightEye.restingX - width
+            y: nose.y - height
+            opacity: 1
+            // Flip image horizontally
+            transform: [
+                Rotation {
+                    origin.x: rightEyebrow.width / 2
+                    origin.y: rightEyebrow.height / 2
+                    axis.z: 1
+                    angle: 180
+                },
+                Scale {
+                    origin.y: rightEyebrow.height / 2
+                    yScale: -1
+                }
+            ]
+
+            // Because we flip the image, we don't use BottomRight here.
+            transformOrigin: Item.BottomLeft
         }
 
         Nose {

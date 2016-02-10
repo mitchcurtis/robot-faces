@@ -19,6 +19,23 @@ SequentialAnimation {
             to: "red"
             duration: 200
         }
+        NumberAnimation {
+            target: face.leftEyebrow
+            property: "rotation"
+            from: 0
+            to: -45
+            duration: 200
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
+            target: face.rightEyebrow
+            property: "rotation"
+            from: 0
+            // Because we flip the image, we don't use 45 here.
+            to: -45
+            duration: 200
+            easing.type: Easing.InOutQuad
+        }
     }
 
     PauseAnimation {
@@ -26,6 +43,22 @@ SequentialAnimation {
     }
 
     ParallelAnimation {
+        NumberAnimation {
+            target: face.leftEyebrow
+            property: "rotation"
+            from: -45
+            to: 0
+            duration: 200
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
+            target: face.rightEyebrow
+            property: "rotation"
+            from: -45
+            to: 0
+            duration: 200
+            easing.type: Easing.InOutQuad
+        }
         ColorAnimation {
             target: face.nose
             property: "color"

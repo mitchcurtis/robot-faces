@@ -10,5 +10,6 @@
         <file>CryingAnimation.qml</file>
         <file>ShyAnimation.qml</file>
         <file>AngryAnimation.qml</file>
+        <file>Eyebrow.qml</file>
     </qresource>
 </RCC>
