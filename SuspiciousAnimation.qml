@@ -26,7 +26,7 @@ SequentialAnimation {
             property: "rotation"
             from: 0
             // Because we flip the image, we don't use 45 here.
-            to: -45
+            to: -58
             duration: 200
             easing.type: Easing.InOutQuad
         }
@@ -138,7 +138,7 @@ SequentialAnimation {
         NumberAnimation {
             target: face.rightEyebrow
             property: "rotation"
-            from: -45
+            from: -58
             to: 0
             duration: 200
             easing.type: Easing.InOutQuad
