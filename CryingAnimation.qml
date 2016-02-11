@@ -61,7 +61,7 @@ SequentialAnimation {
     }
 
     SequentialAnimation {
-        loops: 5
+        loops: 3
 
         ParallelAnimation {
             NumberAnimation {
