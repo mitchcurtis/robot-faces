@@ -1,6 +1,8 @@
 import QtQuick 2.0
 
 SequentialAnimation {
+    id: root
+
     property var face
 
     ParallelAnimation {
@@ -8,8 +10,16 @@ SequentialAnimation {
             targets: face.rightEye.pupil
             property: "x"
             from: face.rightEye.pupil.restingX
-            to: face.rightEye.pupil.restingX + face.rightEye.pupil.width
+            to: face.rightEye.pupil.restingX + 40
             duration: 200
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
+            target: face.rightEye.pupil
+            property: "y"
+            from: face.rightEye.pupil.restingY
+            to: face.rightEye.pupil.parent.height / 2 - face.rightEye.pupil.restingWidth / 2
+            duration: 300
             easing.type: Easing.InOutQuad
         }
         NumberAnimation {
@@ -67,7 +77,15 @@ SequentialAnimation {
             targets: face.leftEye.pupil
             property: "x"
             from: face.leftEye.pupil.restingX
-            to: face.leftEye.pupil.restingX + face.leftEye.pupil.width
+            to: face.leftEye.pupil.restingX + 10
+            duration: 200
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
+            targets: face.leftEye.pupil
+            property: "y"
+            from: face.leftEye.pupil.restingY
+            to: 0
             duration: 200
             easing.type: Easing.InOutQuad
         }
@@ -81,8 +99,16 @@ SequentialAnimation {
         NumberAnimation {
             targets: face.leftEye.pupil
             property: "x"
-            from: face.leftEye.pupil.restingX + face.leftEye.pupil.width
+            from: face.leftEye.pupil.restingX + 10
             to: face.leftEye.pupil.restingX
+            duration: 200
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
+            targets: face.leftEye.pupil
+            property: "y"
+            from: 0
+            to: face.leftEye.pupil.restingY
             duration: 200
             easing.type: Easing.InOutQuad
         }
@@ -137,9 +163,17 @@ SequentialAnimation {
         NumberAnimation {
             targets: face.rightEye.pupil
             property: "x"
-            from: face.rightEye.pupil.restingX + face.rightEye.pupil.width
+            from: face.rightEye.pupil.restingX + 40
             to: face.rightEye.pupil.restingX
             duration: 200
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
+            target: face.rightEye.pupil
+            property: "y"
+            from: face.rightEye.pupil.parent.height / 2 - face.rightEye.pupil.restingWidth / 2
+            to: face.rightEye.pupil.restingY
+            duration: 300
             easing.type: Easing.InOutQuad
         }
     }
