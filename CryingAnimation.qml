@@ -7,11 +7,44 @@ SequentialAnimation {
 
     ScriptAction {
         script: {
-//            face.mouth.yOffset = 50;
+            face.mouth.visibleRangeMin = 0;
+            face.mouth.visibleRangeMax = face.mouth.teethCount;
         }
     }
 
     ParallelAnimation {
+        NumberAnimation {
+            target: face.leftEye.pupil
+            property: "x"
+            from: face.leftEye.pupil.restingX
+            to: face.leftEye.pupil.parent.width / 2 - face.leftEye.pupil.restingWidth / 2
+            duration: 300
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
+            target: face.leftEye.pupil
+            property: "y"
+            from: face.leftEye.pupil.restingY
+            to: face.leftEye.pupil.parent.height / 2 - face.leftEye.pupil.restingWidth / 2
+            duration: 300
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
+            target: face.rightEye.pupil
+            property: "x"
+            from: face.rightEye.pupil.restingX
+            to: face.rightEye.pupil.parent.width / 2 - face.rightEye.pupil.restingWidth / 2
+            duration: 300
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
+            target: face.rightEye.pupil
+            property: "y"
+            from: face.rightEye.pupil.restingY
+            to: face.rightEye.pupil.parent.height / 2 - face.rightEye.pupil.restingWidth / 2
+            duration: 300
+            easing.type: Easing.InOutQuad
+        }
         ColorAnimation {
             targets: [face.leftEye.sclera, face.rightEye.sclera]
             property: "color"
@@ -113,6 +146,15 @@ SequentialAnimation {
         }
     }
 
+    NumberAnimation {
+        targets: [face.leftEye.smallTear, face.leftEye.bigTear, face.rightEye.smallTear, face.rightEye.bigTear]
+        property: "opacity"
+        from: 1
+        to: 0
+        duration: 400
+        easing.type: Easing.InOutQuad
+    }
+
     ParallelAnimation {
         NumberAnimation {
             target: face.mouth
@@ -120,14 +162,6 @@ SequentialAnimation {
             from: face.mouth.restingToothHeight / 3
             to: face.mouth.restingToothHeight
             duration: 200
-            easing.type: Easing.InOutQuad
-        }
-        NumberAnimation {
-            targets: [face.leftEye.smallTear, face.leftEye.bigTear, face.rightEye.smallTear, face.rightEye.bigTear]
-            property: "opacity"
-            from: 1
-            to: 0
-            duration: 400
             easing.type: Easing.InOutQuad
         }
         ColorAnimation {
@@ -151,6 +185,38 @@ SequentialAnimation {
             property: "color"
             from: "black"
             to: "white"
+            duration: 300
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
+            target: face.leftEye.pupil
+            property: "x"
+            from: face.leftEye.pupil.parent.width / 2 - face.leftEye.pupil.restingWidth / 2
+            to: face.leftEye.pupil.restingX
+            duration: 300
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
+            target: face.leftEye.pupil
+            property: "y"
+            from: face.leftEye.pupil.parent.height / 2 - face.leftEye.pupil.restingWidth / 2
+            to: face.leftEye.pupil.restingY
+            duration: 300
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
+            target: face.rightEye.pupil
+            property: "x"
+            from: face.rightEye.pupil.parent.width / 2 - face.rightEye.pupil.restingWidth / 2
+            to: face.rightEye.pupil.restingX
+            duration: 300
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
+            target: face.rightEye.pupil
+            property: "y"
+            from: face.rightEye.pupil.parent.height / 2 - face.rightEye.pupil.restingWidth / 2
+            to: face.rightEye.pupil.restingY
             duration: 300
             easing.type: Easing.InOutQuad
         }

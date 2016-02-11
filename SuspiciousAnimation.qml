@@ -3,15 +3,6 @@ import QtQuick 2.0
 SequentialAnimation {
     property var face
 
-    ScriptAction {
-        script: {
-            face.mouth.visibleRangeMin = 4;
-            face.mouth.visibleRangeMax = 6;
-        }
-    }
-
-    readonly property int pupilMovement: 20
-
     ParallelAnimation {
         NumberAnimation {
             targets: face.rightEye.pupil
@@ -150,17 +141,6 @@ SequentialAnimation {
             to: face.rightEye.pupil.restingX
             duration: 200
             easing.type: Easing.InOutQuad
-        }
-        SequentialAnimation {
-            PauseAnimation {
-                duration: 200
-            }
-            ScriptAction {
-                script: {
-                    face.mouth.visibleRangeMin = 0;
-                    face.mouth.visibleRangeMax = face.mouth.teethCount;
-                }
-            }
         }
     }
 

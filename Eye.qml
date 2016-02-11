@@ -83,8 +83,8 @@ Rectangle {
             source: "qrc:/images/big-tear.png"
             opacity: 0
 
-            property int restingX: pupil.restingX
-            property int restingY: pupil.restingY + pupil.restingWidth + 5
+            property int restingX: pupil.parent.width / 2 - pupil.restingWidth / 2
+            property int restingY: pupil.parent.height / 2 + pupil.restingWidth / 2 + 5
         }
     }
 }

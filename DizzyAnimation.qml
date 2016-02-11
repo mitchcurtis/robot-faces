@@ -12,7 +12,7 @@ SequentialAnimation {
         }
     }
 
-    readonly property int yDistance: 30
+    readonly property int yDistance: 60
 
     ParallelAnimation {
         NumberAnimation {
@@ -34,24 +34,14 @@ SequentialAnimation {
         }
 
         SequentialAnimation {
-            ParallelAnimation {
-                NumberAnimation {
-                    targets: face.leftEye.pupil
-                    property: "y"
-                    from: face.leftEye.pupil.restingY
-                    to: face.leftEye.pupil.restingY + yDistance
-                    duration: 500
-                    easing.type: Easing.InOutQuad
-                }
-
-                NumberAnimation {
-                    targets: face.rightEye.pupil
-                    property: "y"
-                    from: face.rightEye.pupil.restingY
-                    to: face.rightEye.pupil.restingY - yDistance
-                    duration: 500
-                    easing.type: Easing.InOutQuad
-                }
+            // One of the eyes has to move first, so make it the right one.
+            NumberAnimation {
+                targets: face.rightEye.pupil
+                property: "y"
+                from: face.rightEye.pupil.restingY
+                to: face.rightEye.pupil.restingY - yDistance
+                duration: 300
+                easing.type: Easing.InOutQuad
             }
 
             SequentialAnimation {
@@ -61,7 +51,7 @@ SequentialAnimation {
                     NumberAnimation {
                         targets: face.leftEye.pupil
                         property: "y"
-                        from: face.leftEye.pupil.restingY + yDistance
+                        from: face.leftEye.pupil.restingY
                         to: face.leftEye.pupil.restingY - yDistance
                         duration: 300
                         easing.type: Easing.InOutQuad
@@ -71,7 +61,7 @@ SequentialAnimation {
                         targets: face.rightEye.pupil
                         property: "y"
                         from: face.rightEye.pupil.restingY - yDistance
-                        to: face.rightEye.pupil.restingY  + yDistance
+                        to: face.rightEye.pupil.restingY
                         duration: 300
                         easing.type: Easing.InOutQuad
                     }
@@ -82,7 +72,7 @@ SequentialAnimation {
                         targets: face.leftEye.pupil
                         property: "y"
                         from: face.leftEye.pupil.restingY - yDistance
-                        to: face.leftEye.pupil.restingY + yDistance
+                        to: face.leftEye.pupil.restingY
                         duration: 300
                         easing.type: Easing.InOutQuad
                     }
@@ -90,7 +80,7 @@ SequentialAnimation {
                     NumberAnimation {
                         targets: face.rightEye.pupil
                         property: "y"
-                        from: face.rightEye.pupil.restingY + yDistance
+                        from: face.rightEye.pupil.restingY
                         to: face.rightEye.pupil.restingY - yDistance
                         duration: 300
                         easing.type: Easing.InOutQuad
@@ -100,20 +90,11 @@ SequentialAnimation {
 
             ParallelAnimation {
                 NumberAnimation {
-                    targets: face.leftEye.pupil
-                    property: "y"
-                    from: face.leftEye.pupil.restingY + yDistance
-                    to: face.leftEye.pupil.restingY
-                    duration: 800
-                    easing.type: Easing.OutQuart
-                }
-
-                NumberAnimation {
                     targets: face.rightEye.pupil
                     property: "y"
                     from: face.rightEye.pupil.restingY - yDistance
                     to: face.rightEye.pupil.restingY
-                    duration: 800
+                    duration: 500
                     easing.type: Easing.OutQuart
                 }
 
@@ -141,8 +122,8 @@ SequentialAnimation {
                     }
                     ScriptAction {
                         script: {
-                            face.mouth.visibleRangeMin = 0;
-                            face.mouth.visibleRangeMax = face.mouth.teethCount;
+                            face.mouth.visibleRangeMin = face.mouth.restingVisibleRangeMin;
+                            face.mouth.visibleRangeMax = face.mouth.restingVisibleRangeMax;
                         }
                     }
                 }
