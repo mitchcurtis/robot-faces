@@ -13,31 +13,15 @@ SequentialAnimation {
     }
 
     readonly property int pupilXMovement: 20
-    readonly property int pupilYMovement: 10
+    readonly property int pupilYMovement: 25
     readonly property int eyebrowStartY: face.leftEye.y - face.leftEyebrow.width * 2
 
     ParallelAnimation {
         NumberAnimation {
-            target: face.leftEye.pupil
-            property: "x"
-            from: face.leftEye.pupil.restingX
-            to: face.leftEye.pupil.restingX + pupilXMovement
-            duration: 200
-            easing.type: Easing.InOutQuad
-        }
-        NumberAnimation {
-            target: face.rightEye.pupil
-            property: "x"
-            from: face.rightEye.pupil.restingX
-            to: face.rightEye.pupil.restingX - pupilXMovement
-            duration: 200
-            easing.type: Easing.InOutQuad
-        }
-        NumberAnimation {
             targets: [face.leftEye.pupil, face.rightEye.pupil]
             property: "y"
             from: face.leftEye.pupil.restingY
-            to: face.leftEye.pupil.restingY + pupilYMovement
+            to: face.leftEye.pupil.restingY - pupilYMovement
             duration: 200
             easing.type: Easing.InOutQuad
         }
@@ -67,24 +51,8 @@ SequentialAnimation {
         NumberAnimation {
             targets: [face.leftEye.pupil, face.rightEye.pupil]
             property: "y"
-            from: face.leftEye.pupil.restingY + pupilYMovement
+            from: face.leftEye.pupil.restingY - pupilYMovement
             to: face.leftEye.pupil.restingY
-            duration: 200
-            easing.type: Easing.InOutQuad
-        }
-        NumberAnimation {
-            target: face.leftEye.pupil
-            property: "x"
-            from: face.leftEye.pupil.restingX + pupilXMovement
-            to: face.leftEye.pupil.restingX
-            duration: 200
-            easing.type: Easing.InOutQuad
-        }
-        NumberAnimation {
-            target: face.rightEye.pupil
-            property: "x"
-            from: face.rightEye.pupil.restingX - pupilXMovement
-            to: face.rightEye.pupil.restingX
             duration: 200
             easing.type: Easing.InOutQuad
         }

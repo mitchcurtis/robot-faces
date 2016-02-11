@@ -1,6 +1,8 @@
 import QtQuick 2.0
 
 SequentialAnimation {
+    id: root
+
     property var face
 
     readonly property int smallTearMovement: 2
@@ -13,37 +15,8 @@ SequentialAnimation {
     }
 
     ParallelAnimation {
-        NumberAnimation {
-            target: face.leftEye.pupil
-            property: "x"
-            from: face.leftEye.pupil.restingX
-            to: face.leftEye.pupil.parent.width / 2 - face.leftEye.pupil.restingWidth / 2
-            duration: 300
-            easing.type: Easing.InOutQuad
-        }
-        NumberAnimation {
-            target: face.leftEye.pupil
-            property: "y"
-            from: face.leftEye.pupil.restingY
-            to: face.leftEye.pupil.parent.height / 2 - face.leftEye.pupil.restingWidth / 2
-            duration: 300
-            easing.type: Easing.InOutQuad
-        }
-        NumberAnimation {
-            target: face.rightEye.pupil
-            property: "x"
-            from: face.rightEye.pupil.restingX
-            to: face.rightEye.pupil.parent.width / 2 - face.rightEye.pupil.restingWidth / 2
-            duration: 300
-            easing.type: Easing.InOutQuad
-        }
-        NumberAnimation {
-            target: face.rightEye.pupil
-            property: "y"
-            from: face.rightEye.pupil.restingY
-            to: face.rightEye.pupil.parent.height / 2 - face.rightEye.pupil.restingWidth / 2
-            duration: 300
-            easing.type: Easing.InOutQuad
+        MovePupilsToCenterAnimation {
+            face: root.face
         }
         ColorAnimation {
             targets: [face.leftEye.sclera, face.rightEye.sclera]
@@ -188,37 +161,8 @@ SequentialAnimation {
             duration: 300
             easing.type: Easing.InOutQuad
         }
-        NumberAnimation {
-            target: face.leftEye.pupil
-            property: "x"
-            from: face.leftEye.pupil.parent.width / 2 - face.leftEye.pupil.restingWidth / 2
-            to: face.leftEye.pupil.restingX
-            duration: 300
-            easing.type: Easing.InOutQuad
-        }
-        NumberAnimation {
-            target: face.leftEye.pupil
-            property: "y"
-            from: face.leftEye.pupil.parent.height / 2 - face.leftEye.pupil.restingWidth / 2
-            to: face.leftEye.pupil.restingY
-            duration: 300
-            easing.type: Easing.InOutQuad
-        }
-        NumberAnimation {
-            target: face.rightEye.pupil
-            property: "x"
-            from: face.rightEye.pupil.parent.width / 2 - face.rightEye.pupil.restingWidth / 2
-            to: face.rightEye.pupil.restingX
-            duration: 300
-            easing.type: Easing.InOutQuad
-        }
-        NumberAnimation {
-            target: face.rightEye.pupil
-            property: "y"
-            from: face.rightEye.pupil.parent.height / 2 - face.rightEye.pupil.restingWidth / 2
-            to: face.rightEye.pupil.restingY
-            duration: 300
-            easing.type: Easing.InOutQuad
+        MovePupilsFromCenterAnimation {
+            face: root.face
         }
     }
 

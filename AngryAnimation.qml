@@ -1,6 +1,8 @@
 import QtQuick 2.0
 
 SequentialAnimation {
+    id: root
+
     property var face
 
     readonly property int pupilWidthIncrease: face.leftEye.pupil.restingWidth
@@ -53,13 +55,9 @@ SequentialAnimation {
             duration: 200
             easing.type: Easing.InOutQuad
         }
-        NumberAnimation {
-            targets: [face.leftEye.pupil, face.rightEye.pupil]
-            property: "y"
-            from: face.leftEye.pupil.restingY
-            to: face.leftEye.pupil.restingY - pupilWidthIncrease / 2
-            duration: 200
-            easing.type: Easing.InOutQuad
+        MovePupilsToCenterAnimation {
+            face: root.face
+            assumePupilHeight: face.leftEye.pupil.restingWidth + pupilWidthIncrease
         }
     }
 
@@ -99,13 +97,9 @@ SequentialAnimation {
             duration: 200
             easing.type: Easing.InOutQuad
         }
-        NumberAnimation {
-            targets: [face.leftEye.pupil, face.rightEye.pupil]
-            property: "y"
-            from: face.leftEye.pupil.restingY - pupilWidthIncrease / 2
-            to: face.leftEye.pupil.restingY
-            duration: 200
-            easing.type: Easing.InOutQuad
+        MovePupilsFromCenterAnimation {
+            face: root.face
+            assumePupilHeight: face.leftEye.pupil.restingWidth + pupilWidthIncrease
         }
         NumberAnimation {
             targets: [face.leftEye.pupil, face.rightEye.pupil]

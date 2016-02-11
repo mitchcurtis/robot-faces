@@ -14,5 +14,7 @@
         <file>SuspiciousAnimation.qml</file>
         <file>BoredAnimation.qml</file>
         <file>Face.qml</file>
+        <file>MovePupilsToCenterAnimation.qml</file>
+        <file>MovePupilsFromCenterAnimation.qml</file>
     </qresource>
 </RCC>
