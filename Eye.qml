@@ -48,13 +48,15 @@ Rectangle {
             property color color: "black"
             property int restingX
             property int restingY
-            readonly property int restingWidth: 27
+            readonly property int restingWidth: 31
 
             onColorChanged: requestPaint()
 
             onPaint: {
                 var ctx = getContext("2d");
                 ctx.reset();
+                ctx.translate(1, 1);
+                ctx.scale((width - 2) / width, (height - 2) / height)
                 ctx.beginPath();
                 ctx.ellipse(0, 0, width, height);
                 ctx.fillStyle = color;

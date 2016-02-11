@@ -4,7 +4,7 @@ SequentialAnimation {
     property var face
 
     readonly property int pupilXMovement: face.leftEye.pupil.restingWidth / 2
-    readonly property int pupilYMovement: 36
+    readonly property int pupilYMovement: 42
 
     ScriptAction {
         script: {
