@@ -7,6 +7,8 @@ SequentialAnimation {
         script: {
             face.mouth.cornerYOffset = 60;
             face.mouth.teethRotation = -40;
+            face.mouth.visibleRangeMin = 0;
+            face.mouth.visibleRangeMax = face.mouth.teethCount;
         }
     }
 
@@ -21,40 +23,14 @@ SequentialAnimation {
         }
 
         NumberAnimation {
-            targets: face.leftEye.pupil
-            property: "x"
-            from: face.leftEye.pupil.restingX
-            to: face.leftEye.pupil.restingX + face.leftEye.pupil.width
-            duration: 500
-            easing.type: Easing.InOutQuad
-        }
-
-        NumberAnimation {
-            targets: face.leftEye.pupil
+            targets: [face.leftEye.pupil, face.rightEye.pupil]
             property: "y"
             from: face.leftEye.pupil.restingY
-            to: face.leftEye.pupil.restingY - face.leftEye.pupil.height
+            to: face.leftEye.pupil.restingWidth / 2
             duration: 500
             easing.type: Easing.InOutQuad
         }
 
-        NumberAnimation {
-            targets: face.rightEye.pupil
-            property: "x"
-            from: face.leftEye.pupil.restingX
-            to: face.leftEye.pupil.restingX - face.rightEye.pupil.width
-            duration: 500
-            easing.type: Easing.InOutQuad
-        }
-
-        NumberAnimation {
-            targets: face.rightEye.pupil
-            property: "y"
-            from: face.rightEye.pupil.restingY
-            to: face.rightEye.pupil.restingY - face.rightEye.pupil.height
-            duration: 500
-            easing.type: Easing.InOutQuad
-        }
     }
 
     PauseAnimation {
@@ -63,37 +39,10 @@ SequentialAnimation {
 
     ParallelAnimation {
         NumberAnimation {
-            targets: face.leftEye.pupil
-            property: "x"
-            from: face.leftEye.pupil.restingX + face.leftEye.pupil.width
-            to: face.leftEye.pupil.restingX
-            duration: 500
-            easing.type: Easing.InOutQuad
-        }
-
-        NumberAnimation {
-            targets: face.leftEye.pupil
+            targets: [face.leftEye.pupil, face.rightEye.pupil]
             property: "y"
-            from: face.leftEye.pupil.restingY - face.leftEye.pupil.height
+            from: face.leftEye.pupil.restingWidth / 2
             to: face.leftEye.pupil.restingY
-            duration: 500
-            easing.type: Easing.InOutQuad
-        }
-
-        NumberAnimation {
-            targets: face.rightEye.pupil
-            property: "x"
-            from: face.leftEye.pupil.restingX - face.rightEye.pupil.width
-            to: face.leftEye.pupil.restingX
-            duration: 500
-            easing.type: Easing.InOutQuad
-        }
-
-        NumberAnimation {
-            targets: face.rightEye.pupil
-            property: "y"
-            from: face.rightEye.pupil.restingY - face.rightEye.pupil.height
-            to: face.rightEye.pupil.restingY
             duration: 500
             easing.type: Easing.InOutQuad
         }
