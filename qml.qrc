@@ -13,5 +13,7 @@
         <file>Eyebrow.qml</file>
         <file>StartledAnimation.qml</file>
         <file>SuspiciousAnimation.qml</file>
+        <file>BoredAnimation.qml</file>
+        <file>Face.qml</file>
     </qresource>
 </RCC>
