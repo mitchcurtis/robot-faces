@@ -3,6 +3,8 @@ import QtQuick.Window 2.2
 import Qt.labs.controls 1.0
 
 ApplicationWindow {
+    x: Screen.desktopAvailableWidth / 2 - width / 2
+    y: Screen.desktopAvailableHeight / 2 - width / 2
     width: 640
     height: 480
     visible: true
@@ -36,11 +38,6 @@ ApplicationWindow {
 
     CryingAnimation {
         id: cryingAnimation
-        face: face
-    }
-
-    ShyAnimation {
-        id: shyAnimation
         face: face
     }
 
@@ -107,12 +104,6 @@ ApplicationWindow {
             text: "CR"
             width: 50
             onClicked: cryingAnimation.start()
-        }
-
-        Button {
-            text: "SH"
-            width: 50
-            onClicked: shyAnimation.start()
         }
 
         Button {

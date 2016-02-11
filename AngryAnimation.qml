@@ -5,6 +5,13 @@ SequentialAnimation {
 
     readonly property int pupilWidthIncrease: face.leftEye.pupil.restingWidth
 
+    ScriptAction {
+        script: {
+            face.mouth.visibleRangeMin = 0;
+            face.mouth.visibleRangeMax = face.mouth.teethCount;
+        }
+    }
+
     ParallelAnimation {
         NumberAnimation {
             target: face.mouth
@@ -108,5 +115,9 @@ SequentialAnimation {
             duration: 200
             easing.type: Easing.InOutQuad
         }
+    }
+
+    ScriptAction {
+        script: face.reset()
     }
 }

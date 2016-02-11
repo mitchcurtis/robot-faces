@@ -8,7 +8,6 @@
         <file>SadAnimation.qml</file>
         <file>DizzyAnimation.qml</file>
         <file>CryingAnimation.qml</file>
-        <file>ShyAnimation.qml</file>
         <file>AngryAnimation.qml</file>
         <file>Eyebrow.qml</file>
         <file>StartledAnimation.qml</file>

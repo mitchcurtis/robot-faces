@@ -17,8 +17,8 @@ Item {
         face.mouth.cornerYOffset = 0;
         face.mouth.teethRotation = 0;
         face.mouth.toothHeight = face.mouth.restingToothHeight;
-        face.mouth.visibleRangeMin = 0;
-        face.mouth.visibleRangeMax = face.mouth.teethCount;
+        face.mouth.visibleRangeMin = 4;
+        face.mouth.visibleRangeMax = 6;
         face.mouth.block.visible = false;
         face.leftEyeBag.visible = false;
         face.rightEyeBag.visible = false;
@@ -59,9 +59,14 @@ Item {
 
         restingX: 95
         restingY: 85
-
         followX: followSwitch.checked ? mouseArea.mouseX : 0
         followY: followSwitch.checked ? mouseArea.mouseY : 0
+
+        // QTBUG-51043
+        Component.onCompleted: {
+            pupil.restingX = pupil.parent.width / 2;
+            pupil.restingY = pupil.parent.height / 2 + 15;
+        }
     }
 
     Eye {
@@ -69,9 +74,13 @@ Item {
 
         restingX: 380
         restingY: 85
-
         followX: followSwitch.checked ? mouseArea.mouseX : 0
         followY: followSwitch.checked ? mouseArea.mouseY : 0
+
+        Component.onCompleted: {
+            pupil.restingX = pupil.parent.width / 2 - pupil.restingWidth;
+            pupil.restingY = pupil.parent.height / 2 + 15;
+        }
     }
 
     Eyebrow {

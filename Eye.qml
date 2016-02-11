@@ -46,8 +46,8 @@ Rectangle {
             height: width
 
             property color color: "black"
-            readonly property int restingX: parent.width / 2 - restingWidth / 2
-            readonly property int restingY: parent.height / 2 - restingWidth / 2
+            property int restingX
+            property int restingY
             readonly property int restingWidth: 27
 
             onColorChanged: requestPaint()

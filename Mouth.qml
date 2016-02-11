@@ -15,8 +15,8 @@ Item {
     readonly property int restingToothHeight: toothWidth
     property real toothHeight: restingToothHeight
 
-    property int visibleRangeMin: 0
-    property int visibleRangeMax: teethCount
+    property int visibleRangeMin: 4
+    property int visibleRangeMax: 6
     readonly property alias teethCount: repeater.count
 
     readonly property int toothWidth: 20
