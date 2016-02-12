@@ -39,6 +39,22 @@ SequentialAnimation {
             easing.type: Easing.InOutQuad
         }
         NumberAnimation {
+            target: face.leftEyebrow
+            property: "y"
+            from: face.leftEyebrow.restingY
+            to: face.leftEyebrow.restingY + 18
+            duration: 200
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
+            target: face.rightEyebrow
+            property: "y"
+            from: face.rightEyebrow.restingY
+            to: face.rightEyebrow.restingY + 18
+            duration: 200
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
             target: face.rightEyebrow
             property: "rotation"
             from: 0
@@ -71,6 +87,22 @@ SequentialAnimation {
             property: "rotation"
             from: -58
             to: 0
+            duration: 200
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
+            target: face.leftEyebrow
+            property: "y"
+            from: face.leftEyebrow.restingY + 18
+            to: face.leftEyebrow.restingY
+            duration: 200
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
+            target: face.rightEyebrow
+            property: "y"
+            from: face.rightEyebrow.restingY + 18
+            to: face.rightEyebrow.restingY
             duration: 200
             easing.type: Easing.InOutQuad
         }

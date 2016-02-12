@@ -117,7 +117,7 @@ Item {
         id: nose
 
         x: 278
-        y: 200
+        y: 182
     }
 
     Mouth {

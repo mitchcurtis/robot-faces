@@ -6,7 +6,7 @@ ApplicationWindow {
     width: 640
     height: 480
     visible: true
-    color: "#3B3C3E"
+    color: "#353637"
 
     Shortcut {
         sequence: "Ctrl+Q"
