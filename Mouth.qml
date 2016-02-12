@@ -3,6 +3,7 @@ import QtQuick 2.0
 import App 1.0
 
 Item {
+    // Most of these properties are for smiles/frowns.
     property real progress: 0
     // Affects the y position of the whole mouth
     property real yOffset: 0
@@ -41,7 +42,7 @@ Item {
             scale: Math.min(0.5 + (1 - (progress * normYPos)), 1)
             width: toothWidth
             // Make the teeth a bit taller.
-            height: toothHeight + progress * 10
+            height: toothHeight + progress * 18
             color: "#929495"
             antialiasing: true
             visible: index >= visibleRangeMin && index <= visibleRangeMax

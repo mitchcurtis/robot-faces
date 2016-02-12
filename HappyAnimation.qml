@@ -8,7 +8,7 @@ SequentialAnimation {
 
     ScriptAction {
         script: {
-            face.mouth.yOffset = 50;
+            face.mouth.yOffset = 10;
             face.mouth.cornerYOffset = -60;
             face.mouth.teethRotation = 40;
             face.mouth.visibleRangeMin = 0;
