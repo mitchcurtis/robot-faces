@@ -3,8 +3,16 @@ TEMPLATE = app
 QT += qml quick
 CONFIG += c++11
 
-SOURCES += main.cpp \
-    easingcurve.cpp
+HEADERS += \
+    easingcurve.h \
+    segbot.h \
+    segbotcommunicator.h
+
+SOURCES += \
+    main.cpp \
+    easingcurve.cpp \
+    segbot.cpp \
+    segbotcommunicator.cpp
 
 RESOURCES += qml.qrc \
     images.qrc
@@ -14,6 +22,3 @@ QML_IMPORT_PATH =
 
 # Default rules for deployment.
 include(deployment.pri)
-
-HEADERS += \
-    easingcurve.h

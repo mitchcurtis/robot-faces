@@ -2,11 +2,21 @@ import QtQuick 2.5
 import QtQuick.Window 2.2
 import Qt.labs.controls 1.0
 
+import App 1.0
+
 ApplicationWindow {
     width: 640
     height: 480
     visible: true
     color: "#353637"
+
+    SegBot {
+        id: segbot
+        updateInterval: 1000
+        device: "/dev/ttyRPMSG"
+
+        onErrorStringChanged: console.log(errorString)
+    }
 
     Shortcut {
         sequence: "Ctrl+Q"
