@@ -70,25 +70,8 @@ ApplicationWindow {
     }
 
     Column {
-        MouseArea {
-            id: mouseArea
-            width: 80
-            height: 80
-            hoverEnabled: true
-
-            Rectangle {
-                anchors.fill: parent
-                color: "transparent"
-                border.color: followSwitch.checked ? (mouseArea.containsMouse ? "darkorange" : "lightgrey") : "grey"
-            }
-        }
-
-        Switch {
-            id: followSwitch
-            text: "follow eyes"
-
-            Component.onCompleted: label.color = "white"
-        }
+        // Uncomment this line to hide the testing buttons.
+//        visible: false
 
         Button {
             text: "HA"

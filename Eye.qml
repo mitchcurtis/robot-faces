@@ -19,8 +19,6 @@ Rectangle {
     property int restingWidth: 165
     property int restingHeight: 165
     readonly property int restingRadius: restingWidth / 2
-    property int followX: 0
-    property int followY: 0
 
     readonly property color restingBorderColor: "#80c342"
     readonly property int restingBorderWidth: 12
@@ -40,8 +38,8 @@ Rectangle {
 
         Canvas {
             id: pupil
-            x: followX != 0 ? followX : restingX
-            y: followY != 0 ? followY : restingY
+            x: restingX
+            y: restingY
             width: restingWidth
             height: width
 

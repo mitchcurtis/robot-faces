@@ -59,8 +59,6 @@ Item {
 
         restingX: 95
         restingY: 85
-        followX: followSwitch.checked ? mouseArea.mouseX : 0
-        followY: followSwitch.checked ? mouseArea.mouseY : 0
 
         // QTBUG-51043
         Component.onCompleted: {
@@ -74,8 +72,6 @@ Item {
 
         restingX: 380
         restingY: 85
-        followX: followSwitch.checked ? mouseArea.mouseX : 0
-        followY: followSwitch.checked ? mouseArea.mouseY : 0
 
         Component.onCompleted: {
             pupil.restingX = pupil.parent.width / 2 - pupil.restingWidth;
