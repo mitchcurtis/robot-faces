@@ -71,7 +71,7 @@ ApplicationWindow {
 
     Column {
         // Uncomment this line to hide the testing buttons.
-//        visible: false
+        visible: false
 
         Button {
             text: "HA"
@@ -119,6 +119,25 @@ ApplicationWindow {
             text: "BO"
             width: 50
             onClicked: boredAnimation.start()
+        }
+    }
+
+    Column {
+        Label {
+            text: "Angle: " + segbot.angle
+            color: "white"
+        }
+        Label {
+            text: "Speed left: " + segbot.speedLeft
+            color: "white"
+        }
+        Label {
+            text: "Speed right: " + segbot.speedRight
+            color: "white"
+        }
+        Label {
+            text: "Distance: " + segbot.sensorDistance
+            color: "white"
         }
     }
 }
