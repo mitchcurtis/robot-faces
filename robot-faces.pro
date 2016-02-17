@@ -6,7 +6,7 @@ qtHaveModule(gamepad) {
     QT += gamepad
 }
 
-DEFINES += TESTING
+#DEFINES += TESTING
 
 CONFIG += c++11
 

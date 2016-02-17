@@ -61,14 +61,12 @@ void SegBotCommunicator::setDevice(const QString &device)
     if (!QFileInfo::exists(device))
         return;
 
-    if (device == QStringLiteral("/dev/ttyRPMSG")) {
-        //Initialize device
-        QString programName("stty");
-        QStringList arguments;
-        arguments.append(QString("-F ") + device);
-        arguments.append(QString("-isig -icanon -iexten -echo -echoe -echok -echoctl -echoke -opost -onlcr -cread"));
-        QProcess::execute(programName, arguments);
-    }
+    //Initialize device
+    QString programName("stty");
+    QStringList arguments;
+    arguments.append(QString("-F ") + device);
+    arguments.append(QString("-isig -icanon -iexten -echo -echoe -echok -echoctl -echoke -opost -onlcr -cread"));
+    QProcess::execute(programName, arguments);
 
     m_device = device;
     // Open the new device file

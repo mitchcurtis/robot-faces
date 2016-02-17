@@ -13,7 +13,7 @@ ApplicationWindow {
     SegBot {
         id: segbot
         updateInterval: 100
-        device: deviceName
+        device: "/dev/ttyRPMSG"
 
         onErrorStringChanged: console.log(errorString)
 
