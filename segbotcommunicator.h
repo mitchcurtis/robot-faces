@@ -45,7 +45,6 @@ private:
     int m_updateInterval;
 
     QFile m_rpMsgFile;
-    QTextStream m_commandStream;
     QString m_errorString;
 };
 

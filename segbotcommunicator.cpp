@@ -1,5 +1,6 @@
 #include "segbotcommunicator.h"
 #include <termios.h>
+#include <QByteArray>
 
 static void config_tty(int fd)
 {
@@ -67,8 +68,10 @@ void SegBotCommunicator::update()
 
     //Angle
     int angle;
-    m_commandStream << QLatin1String("?angle\n");
-    m_commandStream >> angle;
+    QByteArray angleQuery("?angle");
+    m_rpMsgFile.write(angleQuery);
+    QByteArray response = m_rpMsgFile.read(64);
+    sscanf(response.constData(), "?angle:%d", &angle);
     if (angle != m_angle) {
         m_angle = angle;
         emit angleChanged(angle);
@@ -76,8 +79,10 @@ void SegBotCommunicator::update()
 
     //Speed Left
     int speedLeft;
-    m_commandStream << QLatin1String("?speedLeft\n");
-    m_commandStream >> speedLeft;
+    QByteArray speedLeftQuery("?speedLeft");
+    m_rpMsgFile.write(speedLeftQuery);
+    response = m_rpMsgFile.read(64);
+    sscanf(response.constData(), "?speedLeft:%d", &speedLeft);
     if (speedLeft != m_speedLeft) {
         m_speedLeft = speedLeft;
         emit speedLeftChanged(speedLeft);
@@ -85,8 +90,10 @@ void SegBotCommunicator::update()
 
     //Speed Right
     int speedRight;
-    m_commandStream << QLatin1String("?speedRight\n");
-    m_commandStream >> speedRight;
+    QByteArray speedRightQuery("?speedRight");
+    m_rpMsgFile.write(speedRightQuery);
+    response = m_rpMsgFile.read(64);
+    sscanf(response.constData(), "?speedRight:%d", &speedRight);
     if (speedRight != m_speedRight) {
         m_speedRight = speedRight;
         emit speedRightChanged(speedRight);
@@ -94,8 +101,10 @@ void SegBotCommunicator::update()
 
     //Sensor Distance
     int sensorDistance;
-    m_commandStream << QLatin1String("?distance\n");
-    m_commandStream >> sensorDistance;
+    QByteArray distanceQuery("?distance");
+    m_rpMsgFile.write(distanceQuery);
+    response = m_rpMsgFile.read(64);
+    sscanf(response.constData(), "?distance:%d", &sensorDistance);
     if (sensorDistance != m_sensorDistance) {
         m_sensorDistance = sensorDistance;
         emit sensorDistanceChanged(sensorDistance);
@@ -111,7 +120,6 @@ void SegBotCommunicator::openFile()
     if (m_rpMsgFile.open(QIODevice::ReadWrite)) {
         m_active = true;
         config_tty(m_rpMsgFile.handle());
-        m_commandStream.setDevice(&m_rpMsgFile);
         m_updateTimer->start();
     } else {
         m_errorString = QString("File failed to open");
@@ -122,7 +130,6 @@ void SegBotCommunicator::openFile()
 void SegBotCommunicator::closeFile()
 {
     m_updateTimer->stop();
-    m_commandStream.setDevice(nullptr);
     m_active = false;
 
     if (m_rpMsgFile.isOpen()) {
