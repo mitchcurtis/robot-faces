@@ -1,6 +1,8 @@
 #include "segbotcommunicator.h"
 #include <termios.h>
 #include <QByteArray>
+#include <QProcess>
+#include <QFileInfo>
 
 static void config_tty(int fd)
 {
@@ -46,6 +48,16 @@ void SegBotCommunicator::init()
 
 void SegBotCommunicator::setDevice(const QString &device)
 {
+    if (!QFileInfo::exists(device))
+        return;
+
+    //Initialize device
+    QString programName("stty");
+    QStringList arguments;
+    arguments.append(QString("-F ") + device);
+    arguments.append(QString("-isig -icanon -iexten -echo -echoe -echok -echoctl -echoke -opost -onlcr -cread"));
+    QProcess::execute(programName, arguments);
+
     m_device = device;
     // Open the new device file
     if (!m_device.isEmpty())
