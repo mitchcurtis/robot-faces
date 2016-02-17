@@ -7,6 +7,8 @@
 #include <QtCore/QTextStream>
 #include <QtCore/QString>
 
+class QGamepad;
+
 class SegBotCommunicator : public QObject
 {
     Q_OBJECT
@@ -46,6 +48,10 @@ private:
 
     QFile m_rpMsgFile;
     QString m_errorString;
+
+#ifdef TESTING
+    QGamepad *m_gamepad;
+#endif
 };
 
 #endif // SEGBOTCOMMUNICATOR_H

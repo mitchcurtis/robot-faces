@@ -4,6 +4,10 @@
 #include <QProcess>
 #include <QFileInfo>
 
+#ifdef TESTING
+#include <QtGamepad>
+#endif
+
 static void config_tty(int fd)
 {
     struct termios tty;
@@ -31,7 +35,13 @@ SegBotCommunicator::SegBotCommunicator(QObject *parent)
     , m_updateTimer(nullptr)
     , m_updateInterval(100)
 {
+#ifdef TESTING
+    auto gamepads = QGamepadManager::instance()->connectedGamepads();
+    if (gamepads.isEmpty())
+        return;
 
+    m_gamepad = new QGamepad(*gamepads.begin(), this);
+#endif
 }
 
 SegBotCommunicator::~SegBotCommunicator()
@@ -51,12 +61,14 @@ void SegBotCommunicator::setDevice(const QString &device)
     if (!QFileInfo::exists(device))
         return;
 
-    //Initialize device
-    QString programName("stty");
-    QStringList arguments;
-    arguments.append(QString("-F ") + device);
-    arguments.append(QString("-isig -icanon -iexten -echo -echoe -echok -echoctl -echoke -opost -onlcr -cread"));
-    QProcess::execute(programName, arguments);
+    if (device == QStringLiteral("/dev/ttyRPMSG")) {
+        //Initialize device
+        QString programName("stty");
+        QStringList arguments;
+        arguments.append(QString("-F ") + device);
+        arguments.append(QString("-isig -icanon -iexten -echo -echoe -echok -echoctl -echoke -opost -onlcr -cread"));
+        QProcess::execute(programName, arguments);
+    }
 
     m_device = device;
     // Open the new device file
@@ -78,11 +90,17 @@ void SegBotCommunicator::update()
     if (!m_active || !m_rpMsgFile.isOpen())
         return;
 
+#ifdef TESTING
+    emit angleChanged(m_gamepad->axisLeftY() * 12);
+    emit speedLeftChanged(m_gamepad->buttonL2() * 10);
+    emit speedRightChanged(m_gamepad->buttonR2() * 10);
+    emit sensorDistanceChanged(m_gamepad->axisRightY());
+#else
     //Angle
     int angle;
     QByteArray angleQuery("?angle");
     m_rpMsgFile.write(angleQuery);
-    QByteArray response = m_rpMsgFile.read(64);
+    QByteArray response = m_rpMsgFile.readLine(64);
     sscanf(response.constData(), "?angle:%d", &angle);
     if (angle != m_angle) {
         m_angle = angle;
@@ -93,7 +111,7 @@ void SegBotCommunicator::update()
     int speedLeft;
     QByteArray speedLeftQuery("?speedLeft");
     m_rpMsgFile.write(speedLeftQuery);
-    response = m_rpMsgFile.read(64);
+    response = m_rpMsgFile.readLine(64);
     sscanf(response.constData(), "?speedLeft:%d", &speedLeft);
     if (speedLeft != m_speedLeft) {
         m_speedLeft = speedLeft;
@@ -104,7 +122,7 @@ void SegBotCommunicator::update()
     int speedRight;
     QByteArray speedRightQuery("?speedRight");
     m_rpMsgFile.write(speedRightQuery);
-    response = m_rpMsgFile.read(64);
+    response = m_rpMsgFile.readLine(64);
     sscanf(response.constData(), "?speedRight:%d", &speedRight);
     if (speedRight != m_speedRight) {
         m_speedRight = speedRight;
@@ -115,12 +133,13 @@ void SegBotCommunicator::update()
     int sensorDistance;
     QByteArray distanceQuery("?distance");
     m_rpMsgFile.write(distanceQuery);
-    response = m_rpMsgFile.read(64);
+    response = m_rpMsgFile.readLine(64);
     sscanf(response.constData(), "?distance:%d", &sensorDistance);
     if (sensorDistance != m_sensorDistance) {
         m_sensorDistance = sensorDistance;
         emit sensorDistanceChanged(sensorDistance);
     }
+#endif
 }
 
 void SegBotCommunicator::openFile()

@@ -44,6 +44,7 @@ signals:
     void deviceChanged(QString device);
     void updateIntervalChanged(int updateInterval);
     void errorStringChanged(QString errorString);
+    void valuesUpdated();
 
 private slots:
     void onAngleChanged(int angle);

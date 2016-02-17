@@ -1,6 +1,13 @@
 TEMPLATE = app
 
 QT += qml quick
+
+qtHaveModule(gamepad) {
+    QT += gamepad
+}
+
+DEFINES += TESTING
+
 CONFIG += c++11
 
 HEADERS += \

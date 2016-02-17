@@ -91,6 +91,7 @@ void SegBot::onAngleChanged(int angle)
         return;
     m_angle = angle;
     emit angleChanged(angle);
+    emit valuesUpdated();
 }
 
 void SegBot::onSpeedLeftChanged(int speedLeft)
@@ -99,6 +100,7 @@ void SegBot::onSpeedLeftChanged(int speedLeft)
         return;
     m_speedLeft = speedLeft;
     emit speedLeftChanged(speedLeft);
+    emit valuesUpdated();
 }
 
 void SegBot::onSpeedRightChanged(int speedRight)
@@ -107,6 +109,7 @@ void SegBot::onSpeedRightChanged(int speedRight)
         return;
     m_speedRight = speedRight;
     emit speedRightChanged(speedRight);
+    emit valuesUpdated();
 }
 
 void SegBot::onSensorDistanceChanged(int sensorDistance)
@@ -115,6 +118,7 @@ void SegBot::onSensorDistanceChanged(int sensorDistance)
         return;
     m_sensorDistance = sensorDistance;
     emit sensorDistanceChanged(sensorDistance);
+    emit valuesUpdated();
 }
 
 void SegBot::onErrorStringChanged(const QString &errorString)
@@ -123,5 +127,6 @@ void SegBot::onErrorStringChanged(const QString &errorString)
         return;
     m_errorString = errorString;
     emit errorStringChanged(errorString);
+    emit valuesUpdated();
 }
 

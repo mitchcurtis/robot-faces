@@ -12,10 +12,16 @@ ApplicationWindow {
 
     SegBot {
         id: segbot
-        updateInterval: 1000
-        device: "/dev/ttyRPMSG"
+        updateInterval: 100
+        device: deviceName
 
         onErrorStringChanged: console.log(errorString)
+
+        onValuesUpdated: {
+            if (segbot.angle < -5) {
+                startAnimation(startledAnimation);
+            }
+        }
     }
 
     Shortcut {
@@ -69,6 +75,26 @@ ApplicationWindow {
         face: face
     }
 
+    property var currentAnimation
+
+    function startAnimation(animation) {
+        if (currentAnimation) {
+            if (!currentAnimation.running) {
+                currentAnimation.stopped.disconnect(onCurrentAnimationStopped);
+            } else {
+                return;
+            }
+        }
+
+        currentAnimation = animation;
+        currentAnimation.stopped.connect(onCurrentAnimationStopped);
+        currentAnimation.start();
+    }
+
+    function onCurrentAnimationStopped() {
+        currentAnimation = null;
+    }
+
     Column {
         // Uncomment this line to hide the testing buttons.
         visible: false
@@ -76,49 +102,49 @@ ApplicationWindow {
         Button {
             text: "HA"
             width: 50
-            onClicked: happyAnimation.start()
+            onClicked: startAnimation(happyAnimation)
         }
 
         Button {
             text: "SA"
             width: 50
-            onClicked: sadAnimation.start()
+            onClicked: startAnimation(sadAnimation)
         }
 
         Button {
             text: "DI"
             width: 50
-            onClicked: dizzyAnimation.start()
+            onClicked: startAnimation(dizzyAnimation)
         }
 
         Button {
             text: "CR"
             width: 50
-            onClicked: cryingAnimation.start()
+            onClicked: startAnimation(cryingAnimation)
         }
 
         Button {
             text: "AN"
             width: 50
-            onClicked: angryAnimation.start()
+            onClicked: startAnimation(angryAnimation)
         }
 
         Button {
             text: "ST"
             width: 50
-            onClicked: startledAnimation.start()
+            onClicked: startAnimation(startledAnimation)
         }
 
         Button {
             text: "SU"
             width: 50
-            onClicked: suspiciousAnimation.start()
+            onClicked: startAnimation(suspiciousAnimation)
         }
 
         Button {
             text: "BO"
             width: 50
-            onClicked: boredAnimation.start()
+            onClicked: startAnimation(boredAnimation)
         }
     }
 
