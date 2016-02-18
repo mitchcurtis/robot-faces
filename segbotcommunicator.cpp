@@ -1,13 +1,16 @@
 #include "segbotcommunicator.h"
-#include <termios.h>
 #include <QByteArray>
 #include <QProcess>
 #include <QFileInfo>
 #include <QtGamepad/QGamepadManager>
 #include <QtGamepad/QGamepad>
 
+#ifdef Q_OS_UNIX
+#include <termios.h>
+#endif
 static void config_tty(int fd)
 {
+#ifdef Q_OS_UNIX
     struct termios tty;
     memset(&tty, 0, sizeof(tty));
 
@@ -20,8 +23,10 @@ static void config_tty(int fd)
     tty.c_oflag = 0;                // no remapping, no delays
 
     tcsetattr(fd, TCSANOW, &tty);
+#else
+    Q_UNUSED(fd)
+#endif
 }
-
 
 SegBotCommunicator::SegBotCommunicator(QObject *parent)
     : QObject(parent)
