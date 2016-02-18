@@ -31,6 +31,11 @@ public slots:
 
 private slots:
     void update();
+    void turnLeft(bool pressed);
+    void turnRight(bool pressed);
+    void forward(bool pressed);
+    void reverse(bool pressed);
+    void stop();
 
 private:
     void openFile();
@@ -50,10 +55,7 @@ private:
 
     QFile m_rpMsgFile;
     QString m_errorString;
-
-#ifdef TESTING
     QGamepad *m_gamepad;
-#endif
 };
 
 #endif // SEGBOTCOMMUNICATOR_H

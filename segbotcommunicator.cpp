@@ -3,10 +3,8 @@
 #include <QByteArray>
 #include <QProcess>
 #include <QFileInfo>
-
-#ifdef TESTING
-#include <QtGamepad>
-#endif
+#include <QtGamepad/QGamepadManager>
+#include <QtGamepad/QGamepad>
 
 static void config_tty(int fd)
 {
@@ -35,18 +33,24 @@ SegBotCommunicator::SegBotCommunicator(QObject *parent)
     , m_voltage(0)
     , m_updateTimer(nullptr)
     , m_updateInterval(100)
+    , m_gamepad(nullptr)
 {
-#ifdef TESTING
-    auto gamepads = QGamepadManager::instance()->connectedGamepads();
-    if (gamepads.isEmpty())
-        return;
 
-    m_gamepad = new QGamepad(*gamepads.begin(), this);
-#endif
+    auto gamepads = QGamepadManager::instance()->connectedGamepads();
+    if (!gamepads.isEmpty()) {
+        m_gamepad = new QGamepad(*gamepads.begin(), this);
+
+        connect(m_gamepad, SIGNAL(buttonUpChanged(bool)), this, SLOT(forward(bool)));
+        connect(m_gamepad, SIGNAL(buttonDownChanged(bool)), this, SLOT(reverse(bool)));
+        connect(m_gamepad, SIGNAL(buttonRightChanged(bool)), this, SLOT(turnRight(bool)));
+        connect(m_gamepad, SIGNAL(buttonLeftChanged(bool)), this, SLOT(turnLeft(bool)));
+    }
+
 }
 
 SegBotCommunicator::~SegBotCommunicator()
 {
+    delete m_gamepad;
     delete m_updateTimer;
 }
 
@@ -89,12 +93,6 @@ void SegBotCommunicator::update()
     if (!m_active || !m_rpMsgFile.isOpen())
         return;
 
-#ifdef TESTING
-    emit angleChanged(m_gamepad->axisLeftY() * 12);
-    emit speedLeftChanged(m_gamepad->buttonL2() * 10);
-    emit speedRightChanged(m_gamepad->buttonR2() * 10);
-    emit sensorDistanceChanged(m_gamepad->axisRightY());
-#else
     //Angle
     int angle;
     QByteArray angleQuery("?angle");
@@ -149,8 +147,67 @@ void SegBotCommunicator::update()
         m_voltage = voltage;
         emit voltageChanged(voltage);
     }
+}
 
-#endif
+void SegBotCommunicator::turnLeft(bool pressed)
+{
+    if (!m_active || !m_rpMsgFile.isOpen())
+        return;
+
+    if (pressed == false)
+        stop();
+    else {
+        QByteArray command("!turnLeft:50");
+        m_rpMsgFile.write(command);
+    }
+}
+
+void SegBotCommunicator::turnRight(bool pressed)
+{
+    if (!m_active || !m_rpMsgFile.isOpen())
+        return;
+
+    if (pressed == false)
+        stop();
+    else {
+        QByteArray command("!turnRight:50");
+        m_rpMsgFile.write(command);
+    }
+}
+
+void SegBotCommunicator::forward(bool pressed)
+{
+    if (!m_active || !m_rpMsgFile.isOpen())
+        return;
+
+    if (pressed == false)
+        stop();
+    else {
+        QByteArray command("!move:8");
+        m_rpMsgFile.write(command);
+    }
+}
+
+void SegBotCommunicator::reverse(bool pressed)
+{
+    if (!m_active || !m_rpMsgFile.isOpen())
+        return;
+
+    if (pressed == false)
+        stop();
+    else {
+        QByteArray command("!move:-8");
+        m_rpMsgFile.write(command);
+    }
+}
+
+void SegBotCommunicator::stop()
+{
+    if (!m_active || !m_rpMsgFile.isOpen())
+        return;
+
+    QByteArray command("!stop");
+    m_rpMsgFile.write(command);
 }
 
 void SegBotCommunicator::openFile()

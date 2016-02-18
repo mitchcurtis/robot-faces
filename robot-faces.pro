@@ -1,10 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick
-
-qtHaveModule(gamepad) {
-    QT += gamepad
-}
+QT += qml quick gamepad
 
 #DEFINES += TESTING
 
