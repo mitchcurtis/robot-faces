@@ -32,6 +32,7 @@ SegBotCommunicator::SegBotCommunicator(QObject *parent)
     , m_speedLeft(0)
     , m_speedRight(0)
     , m_sensorDistance(0)
+    , m_voltage(0)
     , m_updateTimer(nullptr)
     , m_updateInterval(100)
 {
@@ -137,6 +138,18 @@ void SegBotCommunicator::update()
         m_sensorDistance = sensorDistance;
         emit sensorDistanceChanged(sensorDistance);
     }
+
+    // Voltage
+    int voltage;
+    QByteArray voltageQuery("?voltage");
+    m_rpMsgFile.write(voltageQuery);
+    response = m_rpMsgFile.readLine(64);
+    sscanf(response.constData(), "?voltage:%d", &voltage);
+    if (voltage != m_voltage) {
+        m_voltage = voltage;
+        emit voltageChanged(voltage);
+    }
+
 #endif
 }
 

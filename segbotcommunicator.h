@@ -22,6 +22,7 @@ signals:
     void speedRightChanged(int speedRight);
     void sensorDistanceChanged(int sensorDistance);
     void errorStringChanged(const QString &errorString);
+    void voltageChanged(int voltage);
 
 public slots:
     void init();
@@ -42,6 +43,7 @@ private:
     int m_speedRight;
     int m_sensorDistance;
     QString m_device;
+    int m_voltage;
 
     QTimer *m_updateTimer;
     int m_updateInterval;

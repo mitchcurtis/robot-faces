@@ -165,5 +165,9 @@ ApplicationWindow {
             text: "Distance: " + segbot.sensorDistance
             color: "white"
         }
+        Label {
+            text: "Voltage: " + segbot.voltage
+            color: "white"
+        }
     }
 }

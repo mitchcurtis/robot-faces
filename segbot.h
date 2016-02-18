@@ -20,6 +20,7 @@ class SegBot : public QObject
     Q_PROPERTY(QString device READ device WRITE setDevice NOTIFY deviceChanged)
     Q_PROPERTY(int updateInterval READ updateInterval WRITE setUpdateInterval NOTIFY updateIntervalChanged)
     Q_PROPERTY(QString errorString READ errorString NOTIFY errorStringChanged)
+    Q_PROPERTY(int voltage READ voltage WRITE setVoltage NOTIFY voltageChanged)
 public:
     explicit SegBot(QObject *parent = 0);
     ~SegBot();
@@ -31,10 +32,12 @@ public:
     QString device() const;
     int updateInterval() const;
     QString errorString() const;
+    int voltage() const;
 
 public slots:
     void setDevice(QString device);
     void setUpdateInterval(int updateInterval);
+    void setVoltage(int voltage);
 
 signals:
     void angleChanged(int angle);
@@ -45,6 +48,7 @@ signals:
     void updateIntervalChanged(int updateInterval);
     void errorStringChanged(QString errorString);
     void valuesUpdated();
+    void voltageChanged(int voltage);
 
 private slots:
     void onAngleChanged(int angle);
@@ -64,6 +68,7 @@ private:
 
     SegBotCommunicator *m_segBotCommunicator;
     QThread *m_communicatorThread;
+    int m_voltage;
 };
 
 #endif // SEGBOT_H

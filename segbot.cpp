@@ -8,6 +8,7 @@ SegBot::SegBot(QObject *parent)
     , m_speedRight(0)
     , m_sensorDistance(0)
     , m_updateInterval(100)
+    , m_voltage(0)
 {
     m_segBotCommunicator = new SegBotCommunicator();
     m_communicatorThread = new QThread(this);
@@ -65,6 +66,11 @@ QString SegBot::errorString() const
     return m_errorString;
 }
 
+int SegBot::voltage() const
+{
+    return m_voltage;
+}
+
 void SegBot::setDevice(QString device)
 {
     if (m_device == device)
@@ -83,6 +89,15 @@ void SegBot::setUpdateInterval(int updateInterval)
     m_updateInterval = updateInterval;
     emit updateIntervalChanged(updateInterval);
     QMetaObject::invokeMethod(m_segBotCommunicator, "setUpdateInterval", Qt::QueuedConnection, Q_ARG(int, updateInterval));
+}
+
+void SegBot::setVoltage(int voltage)
+{
+    if (m_voltage == voltage)
+        return;
+
+    m_voltage = voltage;
+    emit voltageChanged(voltage);
 }
 
 void SegBot::onAngleChanged(int angle)
