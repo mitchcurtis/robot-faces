@@ -33,66 +33,152 @@ ApplicationWindow {
         id: face
         width: parent.width
         height: parent.height
-    }
 
-    HappyAnimation {
-        id: happyAnimation
-        face: face
-    }
-
-    SadAnimation {
-        id: sadAnimation
-        face: face
-    }
-
-    DizzyAnimation {
-        id: dizzyAnimation
-        face: face
-    }
-
-    CryingAnimation {
-        id: cryingAnimation
-        face: face
-    }
-
-    AngryAnimation {
-        id: angryAnimation
-        face: face
-    }
-
-    StartledAnimation {
-        id: startledAnimation
-        face: face
-    }
-
-    SuspiciousAnimation {
-        id: suspiciousAnimation
-        face: face
-    }
-
-    BoredAnimation {
-        id: boredAnimation
-        face: face
-    }
-
-    property var currentAnimation
-
-    function startAnimation(animation) {
-        if (currentAnimation) {
-            if (!currentAnimation.running) {
-                currentAnimation.stopped.disconnect(onCurrentAnimationStopped);
-            } else {
-                return;
+        states: [
+            State {
+                name: "Idle"
+            },
+            State {
+                name: "Happy"
+            },
+            State {
+                name: "Sad"
+            },
+            State {
+                name: "Crying"
+            },
+            State {
+                name: "Startled"
+            },
+            State {
+                name: "Dizzy"
+            },
+            State {
+                name: "Angry"
+            },
+            State {
+                name: "Suspicious"
+            },
+            State {
+                name: "Bored"
             }
-        }
+        ]
 
-        currentAnimation = animation;
-        currentAnimation.stopped.connect(onCurrentAnimationStopped);
-        currentAnimation.start();
-    }
-
-    function onCurrentAnimationStopped() {
-        currentAnimation = null;
+        transitions: [
+            Transition {
+                from: "Idle"
+                to: "Happy"
+                ToHappyAnimation {
+                    face: face
+                }
+            },
+            Transition {
+                from: "Happy"
+                to: "Idle"
+                FromHappyAnimation {
+                    face: face
+                }
+            },
+            Transition {
+                from: "Idle"
+                to: "Sad"
+                ToSadAnimation {
+                    face: face
+                }
+            },
+            Transition {
+                from: "Sad"
+                to: "Idle"
+                FromSadAnimation {
+                    face: face
+                }
+            },
+            Transition {
+                from: "Idle"
+                to: "Crying"
+                ToCryingAnimation {
+                    face: face
+                }
+            },
+            Transition {
+                from: "Crying"
+                to: "Idle"
+                FromCryingAnimation {
+                    face: face
+                }
+            },
+            Transition {
+                from: "Idle"
+                to: "Startled"
+                ToStartledAnimation {
+                    face: face
+                }
+            },
+            Transition {
+                from: "Startled"
+                to: "Idle"
+                FromStartledAnimation {
+                    face: face
+                }
+            },
+            Transition {
+                from: "Idle"
+                to: "Dizzy"
+                ToDizzyAnimation {
+                    face: face
+                }
+            },
+            Transition {
+                from: "Dizzy"
+                to: "Idle"
+                FromDizzyAnimation {
+                    face: face
+                }
+            },
+            Transition {
+                from: "Idle"
+                to: "Angry"
+                ToAngryAnimation {
+                    face: face
+                }
+            },
+            Transition {
+                from: "Angry"
+                to: "Idle"
+                FromAngryAnimation {
+                    face: face
+                }
+            },
+            Transition {
+                from: "Idle"
+                to: "Suspicious"
+                ToSuspiciousAnimation {
+                    face: face
+                }
+            },
+            Transition {
+                from: "Suspicious"
+                to: "Idle"
+                FromSuspiciousAnimation {
+                    face: face
+                }
+            },
+            Transition {
+                from: "Idle"
+                to: "Bored"
+                ToBoredAnimation {
+                    face: face
+                }
+            },
+            Transition {
+                from: "Bored"
+                to: "Idle"
+                FromBoredAnimation {
+                    face: face
+                }
+            }
+        ]
+        state: "Idle"
     }
 
     Column {
@@ -102,49 +188,75 @@ ApplicationWindow {
         Button {
             text: "HA"
             width: 50
-            onClicked: startAnimation(happyAnimation)
+            onClicked: {
+                face.state = "Happy"
+            }
         }
 
         Button {
             text: "SA"
             width: 50
-            onClicked: startAnimation(sadAnimation)
+            onClicked: {
+                face.state = "Sad"
+            }
         }
 
         Button {
             text: "DI"
             width: 50
-            onClicked: startAnimation(dizzyAnimation)
+            onClicked: {
+                face.state = "Dizzy";
+
+            }
         }
 
         Button {
             text: "CR"
             width: 50
-            onClicked: startAnimation(cryingAnimation)
+            onClicked: {
+                face.state = "Crying"
+            }
         }
 
         Button {
             text: "AN"
             width: 50
-            onClicked: startAnimation(angryAnimation)
+            onClicked: {
+                face.state = "Angry"
+            }
         }
 
         Button {
             text: "ST"
             width: 50
-            onClicked: startAnimation(startledAnimation)
+            onClicked: {
+                face.state = "Startled"
+            }
         }
 
         Button {
             text: "SU"
             width: 50
-            onClicked: startAnimation(suspiciousAnimation)
+            onClicked: {
+                face.state = "Suspicious"
+            }
+
         }
 
         Button {
             text: "BO"
             width: 50
-            onClicked: startAnimation(boredAnimation)
+            onClicked: {
+                face.state = "Bored"
+            }
+        }
+
+        Button {
+            text: "ID"
+            width: 50
+            onClicked: {
+                face.state = "Idle"
+            }
         }
     }
 

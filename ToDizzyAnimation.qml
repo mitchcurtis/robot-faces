@@ -45,7 +45,7 @@ SequentialAnimation {
             }
 
             SequentialAnimation {
-                loops: 2
+                loops: Animation.Infinite
 
                 ParallelAnimation {
                     NumberAnimation {
@@ -129,9 +129,5 @@ SequentialAnimation {
                 }
             }
         }
-    }
-
-    ScriptAction {
-        script: face.reset()
     }
 }
