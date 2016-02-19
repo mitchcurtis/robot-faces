@@ -164,6 +164,8 @@ void SegBotCommunicator::turnLeft(bool pressed)
     else {
         QByteArray command("!turnLeft:50");
         m_rpMsgFile.write(command);
+        m_rpMsgFile.flush();
+        m_rpMsgFile.readLine(64);
     }
 }
 
@@ -177,6 +179,8 @@ void SegBotCommunicator::turnRight(bool pressed)
     else {
         QByteArray command("!turnRight:50");
         m_rpMsgFile.write(command);
+        m_rpMsgFile.flush();
+        m_rpMsgFile.readLine(64);
     }
 }
 
@@ -190,6 +194,8 @@ void SegBotCommunicator::forward(bool pressed)
     else {
         QByteArray command("!move:8");
         m_rpMsgFile.write(command);
+        m_rpMsgFile.flush();
+        m_rpMsgFile.readLine(64);
     }
 }
 
@@ -203,6 +209,8 @@ void SegBotCommunicator::reverse(bool pressed)
     else {
         QByteArray command("!move:-8");
         m_rpMsgFile.write(command);
+        m_rpMsgFile.flush();
+        m_rpMsgFile.readLine(64);
     }
 }
 
@@ -213,6 +221,8 @@ void SegBotCommunicator::stop()
 
     QByteArray command("!stop");
     m_rpMsgFile.write(command);
+    m_rpMsgFile.flush();
+    m_rpMsgFile.readLine(64);
 }
 
 void SegBotCommunicator::openFile()
