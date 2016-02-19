@@ -214,4 +214,22 @@ ApplicationWindow {
             color: "white"
         }
     }
+
+    MouseArea {
+        id: gamepadArea
+        anchors.bottom: parent.bottom
+        anchors.right: parent.right
+        height: 50
+        width: 50
+        onClicked: {
+            gamepadConfigure.visible = true;
+        }
+    }
+
+    GamepadConfiguration {
+        id: gamepadConfigure
+        visible: false
+
+        anchors.fill: parent
+    }
 }

@@ -24,5 +24,6 @@
         <file>FromBoredAnimation.qml</file>
         <file>ToStartledAnimation.qml</file>
         <file>FromStartledAnimation.qml</file>
+        <file>GamepadConfiguration.qml</file>
     </qresource>
 </RCC>
