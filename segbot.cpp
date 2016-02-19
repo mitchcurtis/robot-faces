@@ -23,6 +23,7 @@ SegBot::SegBot(QObject *parent)
     connect(m_segBotCommunicator, SIGNAL(speedRightChanged(int)), this, SLOT(onSpeedRightChanged(int)));
     connect(m_segBotCommunicator, SIGNAL(sensorDistanceChanged(int)), this, SLOT(onSensorDistanceChanged(int)));
     connect(m_segBotCommunicator, SIGNAL(errorStringChanged(QString)), this, SLOT(onErrorStringChanged(QString)));
+    connect(m_segBotCommunicator, SIGNAL(voltageChanged(int)), this, SLOT(onVoltageChanged(int)));
 }
 
 SegBot::~SegBot()
@@ -142,6 +143,15 @@ void SegBot::onErrorStringChanged(const QString &errorString)
         return;
     m_errorString = errorString;
     emit errorStringChanged(errorString);
+    emit valuesUpdated();
+}
+
+void SegBot::onVoltageChanged(int voltage)
+{
+    if (m_voltage == voltage)
+        return;
+    m_voltage = voltage;
+    emit voltageChanged(voltage);
     emit valuesUpdated();
 }
 

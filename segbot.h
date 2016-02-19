@@ -56,6 +56,7 @@ private slots:
     void onSpeedRightChanged(int speedRight);
     void onSensorDistanceChanged(int sensorDistance);
     void onErrorStringChanged(const QString &errorString);
+    void onVoltageChanged(int voltage);
 
 private:
     int m_angle;
