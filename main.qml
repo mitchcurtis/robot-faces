@@ -5,6 +5,7 @@ import QtQuick.Controls 1.4
 import App 1.0
 
 ApplicationWindow {
+    id: window
     width: 640
     height: 480
     visible: true
@@ -15,14 +16,82 @@ ApplicationWindow {
         updateInterval: 100
         device: "/dev/ttyRPMSG"
 
+        // Change this value to set the low power threshold for the warning
+        readonly property int lowVoltageThreshold: 1000
+
         onErrorStringChanged: console.log(errorString)
 
         onValuesUpdated: {
-            if (segbot.angle < -5) {
-                startAnimation(startledAnimation);
+            //This gets called anytime the robot state changes
+            //Check if we are moving forward or backwards
+
+            if (segbot.speedLeft > 10 && segbot.speedRight > 10) {
+                //Moving forward == happy
+                face.setEmotion("Happy");
+                return;
+            } else if ( segbot.speedLeft < -10 && segbot.speedRight < -10) {
+                //Moving backwards == Sad
+                face.setEmotion("Sad");
+                return;
+            }
+
+        }
+
+        onAngleChanged: {
+            if ((angle > -8) && (angle < -6) || (angle > -2) && angle < 0) {
+                //Small push
+                face.setEmotion("Startled");
+            } else if ( (angle < -8) || (angle > 0)) {
+                //Big push
+                face.setEmotion("Angry");
+            }
+        }
+
+        onVoltageChanged: {
+            // Change to the startled state when voltage is low
+            if (voltage < lowVoltageThreshold) {
+                lowpowerWarning.visible = true
+            } else {
+                lowpowerWarning.visible = false
             }
         }
     }
+
+    Text {
+        id: lowpowerWarning
+        visible: false
+        anchors.bottom: parent.bottom
+        anchors.right: parent.right
+        text: "low power"
+        color: "white"
+    }
+
+    Timer {
+        id: idleTimer
+        interval: 5000
+        running: true
+        repeat: true
+
+        onTriggered: {
+            //If we are in idle state, random chance to change emotion
+            var number = Math.floor((Math.random() * 100) + 1);
+            if (number < 50) {
+                face.setEmotion("Idle")
+                return;
+            } else if (number < 60) {
+                face.setEmotion("Suspicious");
+                return;
+            } else if (number < 80) {
+                face.setEmotion("Happy");
+                return;
+            }else if (number < 100) {
+                face.setEmotion("Bored");
+                return;
+            }
+        }
+
+    }
+
 
     Shortcut {
         sequence: "Ctrl+Q"
@@ -34,153 +103,7 @@ ApplicationWindow {
         width: parent.width
         height: parent.height
 
-        states: [
-            State {
-                name: "Idle"
-            },
-            State {
-                name: "Happy"
-            },
-            State {
-                name: "Sad"
-            },
-            State {
-                name: "Crying"
-            },
-            State {
-                name: "Startled"
-            },
-            State {
-                name: "Dizzy"
-            },
-            State {
-                name: "Angry"
-            },
-            State {
-                name: "Suspicious"
-            },
-            State {
-                name: "Bored"
-            }
-        ]
-
-        transitions: [
-            Transition {
-                from: "Idle"
-                to: "Happy"
-                ToHappyAnimation {
-                    face: face
-                }
-            },
-            Transition {
-                from: "Happy"
-                to: "Idle"
-                FromHappyAnimation {
-                    face: face
-                }
-            },
-            Transition {
-                from: "Idle"
-                to: "Sad"
-                ToSadAnimation {
-                    face: face
-                }
-            },
-            Transition {
-                from: "Sad"
-                to: "Idle"
-                FromSadAnimation {
-                    face: face
-                }
-            },
-            Transition {
-                from: "Idle"
-                to: "Crying"
-                ToCryingAnimation {
-                    face: face
-                }
-            },
-            Transition {
-                from: "Crying"
-                to: "Idle"
-                FromCryingAnimation {
-                    face: face
-                }
-            },
-            Transition {
-                from: "Idle"
-                to: "Startled"
-                ToStartledAnimation {
-                    face: face
-                }
-            },
-            Transition {
-                from: "Startled"
-                to: "Idle"
-                FromStartledAnimation {
-                    face: face
-                }
-            },
-            Transition {
-                from: "Idle"
-                to: "Dizzy"
-                ToDizzyAnimation {
-                    face: face
-                }
-            },
-            Transition {
-                from: "Dizzy"
-                to: "Idle"
-                FromDizzyAnimation {
-                    face: face
-                }
-            },
-            Transition {
-                from: "Idle"
-                to: "Angry"
-                ToAngryAnimation {
-                    face: face
-                }
-            },
-            Transition {
-                from: "Angry"
-                to: "Idle"
-                FromAngryAnimation {
-                    face: face
-                }
-            },
-            Transition {
-                from: "Idle"
-                to: "Suspicious"
-                ToSuspiciousAnimation {
-                    face: face
-                }
-            },
-            Transition {
-                from: "Suspicious"
-                to: "Idle"
-                FromSuspiciousAnimation {
-                    face: face
-                }
-            },
-            Transition {
-                from: "Idle"
-                to: "Bored"
-                ToBoredAnimation {
-                    face: face
-                }
-            },
-            Transition {
-                from: "Bored"
-                to: "Idle"
-                FromBoredAnimation {
-                    face: face
-                }
-            }
-        ]
-        state: "Idle"
     }
-
     Column {
         // Uncomment this line to hide the testing buttons.
         visible: false
@@ -189,7 +112,8 @@ ApplicationWindow {
             text: "HA"
             width: 50
             onClicked: {
-                face.state = "Happy"
+                face.setEmotion("Happy");
+                //face.state = "Happy"
             }
         }
 
@@ -197,7 +121,8 @@ ApplicationWindow {
             text: "SA"
             width: 50
             onClicked: {
-                face.state = "Sad"
+                face.setEmotion("Sad");
+                //face.state = "Sad"
             }
         }
 
@@ -205,7 +130,8 @@ ApplicationWindow {
             text: "DI"
             width: 50
             onClicked: {
-                face.state = "Dizzy";
+                face.setEmotion("Dizzy");
+                //face.state = "Dizzy";
 
             }
         }
@@ -214,7 +140,8 @@ ApplicationWindow {
             text: "CR"
             width: 50
             onClicked: {
-                face.state = "Crying"
+                face.setEmotion("Crying");
+                //face.state = "Crying"
             }
         }
 
@@ -222,7 +149,8 @@ ApplicationWindow {
             text: "AN"
             width: 50
             onClicked: {
-                face.state = "Angry"
+                face.setEmotion("Angry");
+                //face.state = "Angry"
             }
         }
 
@@ -230,7 +158,8 @@ ApplicationWindow {
             text: "ST"
             width: 50
             onClicked: {
-                face.state = "Startled"
+                face.setEmotion("Startled");
+                //face.state = "Startled"
             }
         }
 
@@ -238,7 +167,8 @@ ApplicationWindow {
             text: "SU"
             width: 50
             onClicked: {
-                face.state = "Suspicious"
+                face.setEmotion("Suspicious");
+                //face.state = "Suspicious"
             }
 
         }
@@ -247,7 +177,8 @@ ApplicationWindow {
             text: "BO"
             width: 50
             onClicked: {
-                face.state = "Bored"
+                face.setEmotion("Bored");
+                //face.state = "Bored"
             }
         }
 
@@ -255,7 +186,8 @@ ApplicationWindow {
             text: "ID"
             width: 50
             onClicked: {
-                face.state = "Idle"
+                face.setEmotion("Idle");
+                //face.state = "Idle"
             }
         }
     }

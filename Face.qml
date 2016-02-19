@@ -122,4 +122,188 @@ Item {
         x: 120
         y: 355
     }
+
+    states: [
+        State {
+            name: "Idle"
+        },
+        State {
+            name: "Happy"
+        },
+        State {
+            name: "Sad"
+        },
+        State {
+            name: "Crying"
+        },
+        State {
+            name: "Startled"
+        },
+        State {
+            name: "Dizzy"
+        },
+        State {
+            name: "Angry"
+        },
+        State {
+            name: "Suspicious"
+        },
+        State {
+            name: "Bored"
+        }
+    ]
+
+    transitions: [
+        Transition {
+            from: "Idle"
+            to: "Happy"
+            ToHappyAnimation {
+                face: face
+            }
+        },
+        Transition {
+            from: "Happy"
+            to: "Idle"
+            FromHappyAnimation {
+                face: face
+            }
+        },
+        Transition {
+            from: "Idle"
+            to: "Sad"
+            ToSadAnimation {
+                face: face
+            }
+        },
+        Transition {
+            from: "Sad"
+            to: "Idle"
+            FromSadAnimation {
+                face: face
+            }
+        },
+        Transition {
+            from: "Idle"
+            to: "Crying"
+            ToCryingAnimation {
+                face: face
+            }
+        },
+        Transition {
+            from: "Crying"
+            to: "Idle"
+            FromCryingAnimation {
+                face: face
+            }
+        },
+        Transition {
+            from: "Idle"
+            to: "Startled"
+            ToStartledAnimation {
+                face: face
+            }
+        },
+        Transition {
+            from: "Startled"
+            to: "Idle"
+            FromStartledAnimation {
+                face: face
+            }
+        },
+        Transition {
+            from: "Idle"
+            to: "Dizzy"
+            ToDizzyAnimation {
+                face: face
+            }
+        },
+        Transition {
+            from: "Dizzy"
+            to: "Idle"
+            FromDizzyAnimation {
+                face: face
+            }
+        },
+        Transition {
+            from: "Idle"
+            to: "Angry"
+            ToAngryAnimation {
+                face: face
+            }
+        },
+        Transition {
+            from: "Angry"
+            to: "Idle"
+            FromAngryAnimation {
+                face: face
+            }
+        },
+        Transition {
+            from: "Idle"
+            to: "Suspicious"
+            ToSuspiciousAnimation {
+                face: face
+            }
+        },
+        Transition {
+            from: "Suspicious"
+            to: "Idle"
+            FromSuspiciousAnimation {
+                face: face
+            }
+        },
+        Transition {
+            from: "Idle"
+            to: "Bored"
+            ToBoredAnimation {
+                face: face
+            }
+        },
+        Transition {
+            from: "Bored"
+            to: "Idle"
+            FromBoredAnimation {
+                face: face
+            }
+        }
+    ]
+    state: "Idle"
+
+    function setEmotion(emotion) {
+        // If we already in an emotion, do nothing
+        if (face.state === emotion)
+            return;
+
+        // The Idle emotion can be set at any time
+        if (emotion === "Idle") {
+            face.state = "Idle";
+            return;
+        }
+
+        // First reset to Idle, then to the target emotion
+        face.state = "Idle";
+        emotionChangeTimer.delayStartEmotion(emotion);
+    }
+
+    Timer {
+        property string emotion: "Idle"
+
+        id: emotionChangeTimer
+        interval: 1000;
+        repeat: false
+
+        function delayStartEmotion(newEmotion) {
+            if (running)
+                stop();
+
+            emotion = newEmotion;
+            start();
+        }
+
+        onTriggered: {
+            face.state = emotion;
+        }
+
+
+    }
 }
