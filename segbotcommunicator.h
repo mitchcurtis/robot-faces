@@ -58,6 +58,9 @@ private:
     QFile m_rpMsgFile;
     QString m_errorString;
     QGamepad *m_gamepad;
+
+    int m_rightServo;
+    int m_leftServo;
 };
 
 #endif // SEGBOTCOMMUNICATOR_H

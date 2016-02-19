@@ -40,6 +40,8 @@ SegBotCommunicator::SegBotCommunicator(QObject *parent)
     , m_armMovementTimer(nullptr)
     , m_updateInterval(100)
     , m_gamepad(nullptr)
+    , m_rightServo(0)
+    , m_leftServo(0)
 {
 
     auto gamepads = QGamepadManager::instance()->connectedGamepads();
@@ -168,24 +170,22 @@ void SegBotCommunicator::updateArms()
     //Axis values are already normalized between -1 and 1, so mutiply that by a
     //constant speed we want and thats how fast the arm moves.
 
-    const int multiplier = 30;
-    double right = m_gamepad->axisRightY();
-    double left = m_gamepad->axisLeftY();
+    static const int multiplier = 30;
+    const int rightServo = 90 - m_gamepad->axisRightY() * multiplier;
+    const int leftServo = 90 + m_gamepad->axisLeftY() * multiplier;
 
-    //If right is not 0.0
-    if (!qFuzzyIsNull(right)) {
-        int rightServo = right * multiplier;
-        QString commandString = QString("!servo:1:") + QString::number(rightServo);
+    if (m_rightServo != rightServo) {
+        m_rightServo = rightServo;
+        QString commandString = QString("!servo:1:") + QString::number(m_rightServo);
         QByteArray command = commandString.toLocal8Bit();
         m_rpMsgFile.write(command);
         m_rpMsgFile.flush();
         m_rpMsgFile.readLine(64);
     }
 
-    //If left is not 0.0
-    if (!qFuzzyIsNull(left)) {
-        int leftServo = left * multiplier;
-        QString commandString = QString("!servo:0:") + QString::number(leftServo);
+    if (m_leftServo != leftServo) {
+        m_leftServo = leftServo;
+        QString commandString = QString("!servo:0:") + QString::number(m_leftServo);
         QByteArray command = commandString.toLocal8Bit();
         m_rpMsgFile.write(command);
         m_rpMsgFile.flush();
