@@ -31,6 +31,7 @@ public slots:
 
 private slots:
     void update();
+    void updateArms();
     void turnLeft(bool pressed);
     void turnRight(bool pressed);
     void forward(bool pressed);
@@ -51,6 +52,7 @@ private:
     int m_voltage;
 
     QTimer *m_updateTimer;
+    QTimer *m_armMovementTimer;
     int m_updateInterval;
 
     QFile m_rpMsgFile;

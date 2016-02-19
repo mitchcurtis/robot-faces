@@ -37,6 +37,7 @@ SegBotCommunicator::SegBotCommunicator(QObject *parent)
     , m_sensorDistance(0)
     , m_voltage(0)
     , m_updateTimer(nullptr)
+    , m_armMovementTimer(nullptr)
     , m_updateInterval(100)
     , m_gamepad(nullptr)
 {
@@ -57,6 +58,7 @@ SegBotCommunicator::~SegBotCommunicator()
 {
     delete m_gamepad;
     delete m_updateTimer;
+    delete m_armMovementTimer;
 }
 
 void SegBotCommunicator::init()
@@ -64,6 +66,10 @@ void SegBotCommunicator::init()
     m_updateTimer = new QTimer();
     m_updateTimer->setInterval(m_updateInterval);
     connect(m_updateTimer, SIGNAL(timeout()), this, SLOT(update()));
+
+    m_armMovementTimer = new QTimer();
+    m_armMovementTimer->setInterval(100);
+    connect(m_armMovementTimer, SIGNAL(timeout()), this, SLOT(updateArms()));
 }
 
 void SegBotCommunicator::setDevice(const QString &device)
@@ -154,6 +160,39 @@ void SegBotCommunicator::update()
     }
 }
 
+void SegBotCommunicator::updateArms()
+{
+    if (m_gamepad == nullptr || !m_gamepad->isConnected())
+        return;
+
+    //Axis values are already normalized between -1 and 1, so mutiply that by a
+    //constant speed we want and thats how fast the arm moves.
+
+    const int multiplier = 30;
+    double right = m_gamepad->axisRightY();
+    double left = m_gamepad->axisLeftY();
+
+    //If right is not 0.0
+    if (!qFuzzyIsNull(right)) {
+        int rightServo = right * multiplier;
+        QString commandString = QString("!servo:1:") + QString::number(rightServo);
+        QByteArray command = commandString.toLocal8Bit();
+        m_rpMsgFile.write(command);
+        m_rpMsgFile.flush();
+        m_rpMsgFile.readLine(64);
+    }
+
+    //If left is not 0.0
+    if (!qFuzzyIsNull(left)) {
+        int leftServo = left * multiplier;
+        QString commandString = QString("!servo:0:") + QString::number(leftServo);
+        QByteArray command = commandString.toLocal8Bit();
+        m_rpMsgFile.write(command);
+        m_rpMsgFile.flush();
+        m_rpMsgFile.readLine(64);
+    }
+}
+
 void SegBotCommunicator::turnLeft(bool pressed)
 {
     if (!m_active || !m_rpMsgFile.isOpen())
@@ -235,6 +274,7 @@ void SegBotCommunicator::openFile()
         m_active = true;
         config_tty(m_rpMsgFile.handle());
         m_updateTimer->start();
+        m_armMovementTimer->start();
     } else {
         m_errorString = QString("File failed to open");
         emit errorStringChanged(m_errorString);
@@ -244,6 +284,7 @@ void SegBotCommunicator::openFile()
 void SegBotCommunicator::closeFile()
 {
     m_updateTimer->stop();
+    m_armMovementTimer->stop();
     m_active = false;
 
     if (m_rpMsgFile.isOpen()) {
