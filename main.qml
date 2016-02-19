@@ -1,7 +1,7 @@
 import QtQuick 2.5
 import QtQuick.Window 2.2
 import QtQuick.Controls 1.4
-
+import QtGamepad 1.0
 import App 1.0
 
 ApplicationWindow {
@@ -11,39 +11,63 @@ ApplicationWindow {
     visible: true
     color: "#353637"
 
+    Gamepad {
+        id: gamepad
+        deviceId: GamepadManager.connectedGamepads.length > 0 ? GamepadManager.connectedGamepads[0] : -1
+
+        onButtonUpChanged: {
+            if (value) {
+                face.setEmotion("Happy");
+            }
+        }
+
+        onButtonDownChanged: {
+            if (value) {
+                face.setEmotion("Sad");
+            }
+        }
+
+    }
+
     SegBot {
         id: segbot
         updateInterval: 100
         device: "/dev/ttyRPMSG"
+
+        property bool isIdle: true
 
         // Change this value to set the low power threshold for the warning
         readonly property int lowVoltageThreshold: 1000
 
         onErrorStringChanged: console.log(errorString)
 
-        onValuesUpdated: {
-            //This gets called anytime the robot state changes
-            //Check if we are moving forward or backwards
-
-            if (segbot.speedLeft > 10 && segbot.speedRight > 10) {
-                //Moving forward == happy
-                face.setEmotion("Happy");
-                return;
-            } else if ( segbot.speedLeft < -10 && segbot.speedRight < -10) {
-                //Moving backwards == Sad
-                face.setEmotion("Sad");
-                return;
-            }
-
-        }
-
         onAngleChanged: {
             if ((angle > -8) && (angle < -6) || (angle > -2) && angle < 0) {
                 //Small push
+                isIdle = false;
                 face.setEmotion("Startled");
             } else if ( (angle < -8) || (angle > 0)) {
                 //Big push
+                isIdle = false;
                 face.setEmotion("Angry");
+            } else {
+                isIdle = true;
+            }
+        }
+
+        onSpeedLeftChanged: {
+            if (speedLeft == 0) {
+                isIdle = true
+            } else {
+                isIdle = false;
+            }
+        }
+
+        onSpeedRightChanged: {
+            if (speedRight == 0) {
+                isIdle = true
+            } else {
+                isIdle = false;
             }
         }
 
@@ -57,6 +81,33 @@ ApplicationWindow {
         }
     }
 
+    Timer {
+        id: idleTimer
+        interval: 3000
+        running: true
+        repeat: true
+
+        onTriggered: {
+            //If we are in idle state, random chance to change emotion
+            if (segbot.isIdle) {
+                var number = Math.floor((Math.random() * 100) + 1);
+                if (number < 50) {
+                    face.setEmotion("Idle")
+                    return;
+                } else if (number < 60) {
+                    face.setEmotion("Suspicious");
+                    return;
+                } else if (number < 80) {
+                    face.setEmotion("Happy");
+                    return;
+                }else if (number < 100) {
+                    face.setEmotion("Bored");
+                    return;
+                }
+            }
+        }
+    }
+
     Text {
         id: lowpowerWarning
         visible: false
@@ -65,33 +116,6 @@ ApplicationWindow {
         text: "low power"
         color: "white"
     }
-
-    Timer {
-        id: idleTimer
-        interval: 5000
-        running: true
-        repeat: true
-
-        onTriggered: {
-            //If we are in idle state, random chance to change emotion
-            var number = Math.floor((Math.random() * 100) + 1);
-            if (number < 50) {
-                face.setEmotion("Idle")
-                return;
-            } else if (number < 60) {
-                face.setEmotion("Suspicious");
-                return;
-            } else if (number < 80) {
-                face.setEmotion("Happy");
-                return;
-            }else if (number < 100) {
-                face.setEmotion("Bored");
-                return;
-            }
-        }
-
-    }
-
 
     Shortcut {
         sequence: "Ctrl+Q"
